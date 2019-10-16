@@ -50,6 +50,22 @@ public class Controller {
 
   }
 
+public void initialize(){
+  System.out.println("initialize");
+  comboBox.getItems().add("1");
+  comboBox.getItems().add("2");
+  comboBox.getItems().add("3");
+  comboBox.getItems().add("4");
+  comboBox.getItems().add("5");
+  comboBox.getItems().add("6");
+  comboBox.getItems().add("7");
+  comboBox.getItems().add("8");
+  comboBox.getItems().add("9");
+  comboBox.getItems().add("10");
+
+
+}
+
   /**
    * This method prints " Test for Record Prodution button" This methods prints to the console to
    * ensure that the method and button is working properly.
@@ -69,16 +85,7 @@ public class Controller {
   @FXML
   public void initializeValue() { // adds value 1- 10 to to a combo box
 
-    comboBox.getItems().add("1");
-    comboBox.getItems().add("2");
-    comboBox.getItems().add("3");
-    comboBox.getItems().add("4");
-    comboBox.getItems().add("5");
-    comboBox.getItems().add("6");
-    comboBox.getItems().add("7");
-    comboBox.getItems().add("8");
-    comboBox.getItems().add("9");
-    comboBox.getItems().add("10");
+
 
     comboBox.setEditable(true);  // creates an editable comboBox
     //comboBox.getSelectionModel().selectFirst(); // This line prints numbers out 2 times
