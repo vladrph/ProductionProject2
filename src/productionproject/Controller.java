@@ -3,6 +3,7 @@ package productionproject;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 
@@ -20,9 +21,13 @@ import java.sql.Statement;
  */
 public class Controller {
 
+@FXML
+private ChoiceBox<ItemType> itemType;
+
 
   @FXML
   private ComboBox<String> comboBox = new ComboBox<>();
+
 
   // @FXML
   // private TextArea ta = new TextArea();
@@ -30,6 +35,8 @@ public class Controller {
 
   @FXML
   private Button productButton;
+
+
   @FXML
   private Button recordButton;
 
@@ -51,7 +58,7 @@ public class Controller {
   }
 
 public void initialize(){
-  System.out.println("initialize");
+
   comboBox.getItems().add("1");
   comboBox.getItems().add("2");
   comboBox.getItems().add("3");
@@ -62,6 +69,9 @@ public void initialize(){
   comboBox.getItems().add("8");
   comboBox.getItems().add("9");
   comboBox.getItems().add("10");
+
+  itemType.getItems().addAll(ItemType.AUDIO,ItemType.VISUAL,ItemType.AUDIO_MOBILE,ItemType.VISUAL_MOBILE);
+
 
 
 }
