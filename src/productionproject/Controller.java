@@ -70,7 +70,7 @@ public void initialize(){
   comboBox.getItems().add("9");
   comboBox.getItems().add("10");
 
-  itemType.getItems().addAll(ItemType.AUDIO,ItemType.VISUAL,ItemType.AUDIO_MOBILE,ItemType.VISUAL_MOBILE);
+ itemType.getItems().addAll(ItemType.AUDIO,ItemType.VISUAL,ItemType.AUDIO_MOBILE,ItemType.VISUAL_MOBILE);
 
 
 
