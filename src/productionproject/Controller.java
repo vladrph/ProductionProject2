@@ -6,11 +6,13 @@ import static productionproject.ItemType.AUDIO_MOBILE;
 import static productionproject.ItemType.VISUAL;
 import static productionproject.ItemType.VISUAL_MOBILE;
 
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -24,6 +26,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javafx.scene.text.Font;
 
 
 /**
@@ -62,10 +65,12 @@ public class Controller {
   @FXML
   private TableColumn<Product, ItemType> typeNameCol;
   @FXML
-  private TextField txtField1; // change name of product field
+  private TextField prodField1; // change name of product field
 
   @FXML
-  private TextField txtField2; // change name of manu field
+  private TextField manuField2; // change name of manu field
+  @FXML
+  private TextArea textArea;
 
   /**
    * This method prints " Test for button" for the print product button.
@@ -74,16 +79,26 @@ public class Controller {
    *              connection.
    */
   @FXML
-  void printproduct(MouseEvent event) {
+  void addproduct(MouseEvent event) {
 
     System.out.println("Test for button for Add Product"); // Text button for print product
     populateList();
-    String nameText = txtField1.getText();
-    String manuText = txtField2.getText();
+    String nameText = prodField1.getText();
+    String manuText = manuField2.getText();
     ItemType type = itemType.getValue();
-    System.out.println(type.code);
+
     productLine.add(new Widget(nameText, manuText, type));
+    productionLog();
     //initializeDB();        //establish the database connection
+
+  }
+  public void productionLog(){                  // This method will show the production log in the Production Log tab TextArea
+
+    String nameText = prodField1.getText();
+    String manuText = manuField2.getText();
+    ItemType type = itemType.getValue();
+    textArea.setFont(new Font("Serif",  12));
+    textArea.appendText(nameText +"  "+ manuText +"  "+type+"\n");
 
   }
 
@@ -108,6 +123,10 @@ public class Controller {
     prodNameCol.setCellValueFactory(new PropertyValueFactory("name"));
     manuNameCol.setCellValueFactory(new PropertyValueFactory("manufacturer"));
     typeNameCol.setCellValueFactory(new PropertyValueFactory("type"));
+
+    testMultimedia();
+
+
   }
 
   public ChoiceBox<ItemType> getItemType() {
@@ -207,6 +226,24 @@ public class Controller {
 
     } catch (SQLException e) {
       e.printStackTrace();
+    }
+  }
+
+  public static void testMultimedia() {
+    AudioPlayer newAudioProduct = new AudioPlayer("DP-X1A", "Onkyo",
+        "DSD/FLAC/ALAC/WAV/AIFF/MQA/Ogg-Vorbis/MP3/AAC", "M3U/PLS/WPL");
+    Screen newScreen = new Screen("720x480", 40, 22);
+    MoviePlayer newMovieProduct = new MoviePlayer("DBPOWER MK101", "OracleProduction", newScreen,
+        MonitorType.LCD);
+    ArrayList<MultimediaControl> productList = new ArrayList<MultimediaControl>();
+    productList.add(newAudioProduct);
+    productList.add(newMovieProduct);
+    for (MultimediaControl p : productList) {
+      System.out.println(p);
+      p.play();
+      p.stop();
+      p.next();
+      p.previous();
     }
   }
 
