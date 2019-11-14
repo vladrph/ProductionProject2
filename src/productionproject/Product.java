@@ -1,23 +1,39 @@
 package productionproject;
 
+
+
 public abstract class Product implements Item {
 
   private int Id;
+
+
+
   private ItemType Type;
-  private String Manufacturer;
+  public  String manufacturer;
   private String Name;
 
+  public void setId(int id) {
+    Id = id;
+  }
 
-  Product(String name, String manufacturer, ItemType type) {
+  public ItemType getType() {
+    return Type;
+  }
+
+  public void setType(ItemType type) {
+    Type = type;
+  }
+
+  public Product(String name, String manufacturer, ItemType type) {
     this.Name = name;
-    this.Manufacturer = manufacturer;
+    this.manufacturer = manufacturer;
     Type = type;
   }
 
 
   public String toString() {
-    return  "Name: " + Name + "\n" + "Manufacturer: " + Manufacturer + "\n" + "Type: "
-        + Type;
+    return  "Name: " + Name + "\n" + "Manufacturer: " + manufacturer + "\n" + "Type: "
+        + Type ;
   }
 
   public int getId() {
@@ -25,11 +41,11 @@ public abstract class Product implements Item {
   }
 
   public String getManufacturer() {
-    return Manufacturer;
+    return manufacturer;
   }
 
   public void setManufacturer(String manufacturer) {
-    Manufacturer = manufacturer;
+    manufacturer = manufacturer;
   }
 
   public String getName() {
@@ -40,6 +56,7 @@ public abstract class Product implements Item {
     Name = name;
   }
 }
+
 
 
 class Widget extends Product {
