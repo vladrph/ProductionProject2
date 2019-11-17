@@ -2,12 +2,12 @@ package productionproject;
 
 public interface ScreenSpec {
 
-   String getResolution();
+  String getResolution();
 
 
-   int getRefreshRate();
+  int getRefreshRate();
 
-   int getResponseTime();
+  int getResponseTime();
 
 
 }

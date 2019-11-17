@@ -1,5 +1,8 @@
 package productionproject;
 
+/**
+ * Audio player is a subclass of Product class and implements multimedia control interface.
+ */
 public class AudioPlayer extends Product implements MultimediaControl {
 
   String supportedAudioFormats;
@@ -7,13 +10,19 @@ public class AudioPlayer extends Product implements MultimediaControl {
 
 
   AudioPlayer(String name, String manufacturer, String supportedAudioFormats,
-              String supportedPlaylistFormats) {
-    super(name, manufacturer,ItemType.AUDIO);
+      String supportedPlaylistFormats) {
+    super(name, manufacturer, ItemType.AUDIO);  // super from Product class constructor
     this.supportedAudioFormats = supportedAudioFormats;
     this.supportedPlaylistFormats = supportedPlaylistFormats;
 
   }
 
+  /**
+   * public String toString that returns the supportedAudioFormats and supportedPlaylistFormat to a
+   * String.
+   *
+   * @return
+   */
   public String toString() {
     return super.toString() + "\n" + "Supported Audio Formats:" + this.supportedAudioFormats + "\n"
         + "Supported Playlist Formats:" + this.supportedPlaylistFormats;

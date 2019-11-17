@@ -1,37 +1,37 @@
 package productionproject;
 
-
 import static productionproject.ItemType.AUDIO;
-import static productionproject.ItemType.AUDIO_MOBILE;
-import static productionproject.ItemType.VISUAL;
-import static productionproject.ItemType.VISUAL_MOBILE;
-
-import java.util.ArrayList;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-
-import javafx.scene.input.MouseEvent;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import javafx.scene.input.MouseEvent;
+
 import javafx.scene.text.Font;
 
 
+
+
+
 /**
- * This controller document has the contains the button and combo box events for the Sprint1 GUI
- * project.
+ * This controller document has the contains the button and combo box events for the Production
+ * Project2 GUI project.
  *
  * @author Vladimir Petit-Homme
  */
@@ -56,8 +56,8 @@ public class Controller {
   private TableView<Product> productTableView;
 
   @FXML
-  ObservableList<Product> productLine = FXCollections.observableArrayList();
-
+  ObservableList<Product> productLine = FXCollections
+      .observableArrayList();  // Creates and observable list called product line
   @FXML
   private TableColumn<?, ?> prodNameCol;
   @FXML
@@ -83,25 +83,36 @@ public class Controller {
 
     System.out.println("Test for button for Add Product"); // Text button for print product
     populateList();
-    String nameText = prodField1.getText();
-    String manuText = manuField2.getText();
-    ItemType type = itemType.getValue();
+    String nameText = prodField1.getText();   // Gets information from production field
+    String manuText = manuField2.getText();   // Gets information from Manufacturer field
+    ItemType type = itemType.getValue();      // Gets a value from the item type field
 
     productLine.add(new Widget(nameText, manuText, type));
     productionLog();
     //initializeDB();        //establish the database connection
 
+    prodField1.setText("");   // clears text field
+    manuField2.setText("");  // clears text field
+    itemType.setValue(null); // clears Choice Box field
   }
-  public void productionLog(){                  // This method will show the production log in the Production Log tab TextArea
+
+  /**
+   * This method will show the production log in the Production Log tab TextArea.
+   */
+  public void productionLog() {
 
     String nameText = prodField1.getText();
     String manuText = manuField2.getText();
     ItemType type = itemType.getValue();
-    textArea.setFont(new Font("Serif",  12));
-    textArea.appendText(nameText +"  "+ manuText +"  "+type+"\n");
+    textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
+    textArea.appendText(nameText + "  " + manuText + "  " + type + "\n"); // adds information of
 
   }
 
+  /**
+   * This method initialize runs automatically as the program is started. This method populates
+   * numbers to the comboBox This method populates enum values into the combo box.
+   */
   public void initialize() {
 
     comboBox.getItems().add("1");
@@ -137,24 +148,12 @@ public class Controller {
     this.itemType = itemType;
   }
 
+  /**
+   * This method populate list is currently an empty method that will be used populate information
+   * from the database.
+   */
 
   public void populateList() {
-
-    //productLine.add(new Widget(nameText, manuText, type));
-    //productLine.add(new Widget(nameText, manuText, type));
-    //productLine.add(new Widget(nameText, manuText, type));
-
-    //ItemType  =  itemType.getValue();
-
-    //prodNameCol.setText(nameText);
-    // manuNameCol.setText(manuText);
-
-    // productTableView.setItems(productLine);
-    //productLine.add(new Widget(txtField1.setText(nameText),txtField2.setText(manuText),itemType.getValue()) {
-    //              }
-    //  Product p1 = new Widget(nameText, manuText, itemType.getValue());
-
-    //  productLine.add(p1);
 
   }
 
@@ -178,7 +177,7 @@ public class Controller {
   public void initializeValue() { // adds value 1- 10 to to a combo box
 
     comboBox.setEditable(true);  // creates an editable comboBox
-    //comboBox.getSelectionModel().selectFirst(); // This line prints numbers out 2 times
+    comboBox.getSelectionModel().selectFirst(); // This line prints numbers out 2 times
 
   }
 
@@ -229,6 +228,9 @@ public class Controller {
     }
   }
 
+  /**
+   * This is a method called test multimedia to demonstrate functionality in the code.
+   */
   public static void testMultimedia() {
     AudioPlayer newAudioProduct = new AudioPlayer("DP-X1A", "Onkyo",
         "DSD/FLAC/ALAC/WAV/AIFF/MQA/Ogg-Vorbis/MP3/AAC", "M3U/PLS/WPL");

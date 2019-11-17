@@ -1,23 +1,25 @@
 package productionproject;
 
-public  class Screen implements ScreenSpec {
+public class Screen implements ScreenSpec {
 
   String resolution;
   int refreshRate;
   int responseTime;
 
-  Screen(String resolution, int refreshRate, int responseTime)
-  // maybe place a super here
-
-  {
+  Screen(String resolution, int refreshRate, int responseTime) {
     this.resolution = resolution;
     this.refreshRate = refreshRate;
     this.responseTime = responseTime;
   }
 
+  /**
+   *  Prints information of resolution, refresh rate, and response time.
+   *
+   * @return
+   */
 
   public String toString() {
-    return  "Resolution:" + resolution + "\n" + "Refresh rate:" + refreshRate + "\n"
+    return "Resolution:" + resolution + "\n" + "Refresh rate:" + refreshRate + "\n"
         + "Response time:"
         + responseTime;
   }
