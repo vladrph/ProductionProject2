@@ -89,7 +89,7 @@ public class Controller {
 
     productLine.add(new Widget(nameText, manuText, type));
     productionLog();
-    //initializeDB();        //establish the database connection
+    initializeDB();        //establish the database connection
 
     prodField1.setText("");   // clears text field
     manuField2.setText("");  // clears text field
