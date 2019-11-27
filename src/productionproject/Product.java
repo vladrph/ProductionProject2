@@ -62,3 +62,9 @@ public abstract class Product implements Item {
 }
 
 
+class Widget extends Product {
+
+  Widget(String name, String manufacturer, ItemType type) {
+    super(name, manufacturer, type);
+  }
+}

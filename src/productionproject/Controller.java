@@ -26,9 +26,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 
 
-
-
-
 /**
  * This controller document has the contains the button and combo box events for the Production
  * Project2 GUI project.
