@@ -23,9 +23,9 @@ public abstract class Product implements Item {
   /**
    * Product constructor holds a String of type name and manufacturer  and a Item type called type.
    *
-   * @param name   the name of the specific product
-   * @param manufacturer  holds the manufacturer of a specific product
-   * @param type        holds the specific ItemType of of the product
+   * @param name         the name of the specific product
+   * @param manufacturer holds the manufacturer of a specific product
+   * @param type         holds the specific ItemType of of the product
    */
 
   public Product(String name, String manufacturer, ItemType type) {
@@ -66,5 +66,7 @@ class Widget extends Product {
 
   Widget(String name, String manufacturer, ItemType type) {
     super(name, manufacturer, type);
+    this.setType(type);
   }
+
 }

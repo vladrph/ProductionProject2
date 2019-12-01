@@ -33,8 +33,8 @@ public class ProductionRecord {
   /**
    * This method contains the fields used to increment the number of items for the serial number.
    *
-   * @param productProduced
-   * @param itemCount
+   * @param productProduced produces a new product
+   * @param itemCount       increments serial number
    */
   public ProductionRecord(Product productProduced, int itemCount) {
 
@@ -43,6 +43,12 @@ public class ProductionRecord {
 
   }
 
+  /**
+   * A to string method that produces the production number, product ID, Serial number and current
+   * date.
+   *
+   * @return
+   */
 
   public String toString() {
     return
@@ -66,10 +72,7 @@ public class ProductionRecord {
 
 
   public void setProductID(int productID) {
-
     this.productID = productID;
-
-
   }
 
   public String getSerialNum() {

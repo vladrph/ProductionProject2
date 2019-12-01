@@ -19,7 +19,7 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws Exception {
     Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
     primaryStage.setTitle("Product Line");
-    primaryStage.setScene(new Scene(root, 670, 475));
+    primaryStage.setScene(new Scene(root, 870, 670));
     primaryStage.show();
 
 

@@ -4,6 +4,7 @@ import static productionproject.ItemType.AUDIO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -69,6 +70,8 @@ public class Controller {
   @FXML
   private TextArea textArea;
 
+  //private Product productProduced;
+
   /**
    * This method prints " Test for button" for the print product button.
    *
@@ -79,7 +82,7 @@ public class Controller {
   void addproduct(MouseEvent event) {
 
     System.out.println("Test for button for Add Product"); // Text button for print product
-    populateList();
+    //populateList();
     String nameText = prodField1.getText();   // Gets information from production field
     String manuText = manuField2.getText();   // Gets information from Manufacturer field
     ItemType type = itemType.getValue();      // Gets a value from the item type field
@@ -110,7 +113,7 @@ public class Controller {
    * This method initialize runs automatically as the program is started. This method populates
    * numbers to the comboBox This method populates enum values into the combo box.
    */
-  public void initialize() {
+  public void initialize() throws SQLException {
 
     comboBox.getItems().add("1");
     comboBox.getItems().add("2");
@@ -127,7 +130,7 @@ public class Controller {
         .addAll(AUDIO, ItemType.VISUAL, ItemType.AUDIO_MOBILE, ItemType.VISUAL_MOBILE);
 
     productTableView.setItems(productLine);
-    //populateList();
+    populateList();
     prodNameCol.setCellValueFactory(new PropertyValueFactory("name"));
     manuNameCol.setCellValueFactory(new PropertyValueFactory("manufacturer"));
     typeNameCol.setCellValueFactory(new PropertyValueFactory("type"));
@@ -145,12 +148,54 @@ public class Controller {
     this.itemType = itemType;
   }
 
+
   /**
    * This method populate list is currently an empty method that will be used populate information
    * from the database.
    */
 
-  public void populateList() {
+  public void populateList() throws SQLException {
+
+    final String jdbc_driver = "org.h2.Driver";
+    final String db_url = "jdbc:h2:./res/ProductDatabase";
+
+    //  Database credentials
+    final String user = "";
+    final String pass = "";
+    Connection conn = null;
+    Statement stmt = null;
+
+    try {
+
+      // STEP 1: Register JDBC driver
+      Class.forName(jdbc_driver);
+      //STEP 2: Open a connection
+      conn = DriverManager.getConnection(db_url, user, pass);
+      stmt = conn.createStatement();
+      String sql = "SELECT * FROM Product";
+      ResultSet rs = stmt.executeQuery(sql);
+      while (rs.next()) {
+        // these lines correspond to the database table columns
+        String name = rs.getString(2);
+        String manufacturer = rs.getString(4);
+        String type = rs.getString(3); // itemType.getValue();
+
+        // create object
+
+        Widget productFromDB = new Widget(name, manufacturer, itemType.getValue());
+
+        // save to observable list
+        productLine.add(productFromDB);
+
+      }
+      stmt.close();
+      conn.close();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
   }
 
@@ -185,6 +230,10 @@ public class Controller {
 
   public void initializeDB() {
 
+    String nameText = prodField1.getText();   // Gets information from production field
+    String manuText = manuField2.getText();   // Gets information from Manufacturer field
+    ItemType type = itemType.getValue();      // Gets information from Item Type choice box.
+
     final String jdbc_driver = "org.h2.Driver";
     final String db_url = "jdbc:h2:./res/ProductDatabase";
 
@@ -207,8 +256,13 @@ public class Controller {
 
       System.out.println("Inserting records into the table...");
 
+      // String sql = "INSERT INTO Product" + "(type, manufacturer, name) "
+      //  + " VALUES ( 'AUDIO', 'Apple', 'Iphone 11 Pro' )";
+
       String sql = "INSERT INTO Product" + "(type, manufacturer, name) "
-          + " VALUES ( 'AUDIO', 'Apple', 'Iphone 11 Pro' )";
+          + " VALUES ( '" + type + "', '" + manuText + "', '" + nameText
+          + "' )";  // this sql statement gets information from the
+      // text fields and choice box and loads them into the database.
 
       stmt.executeUpdate(sql);
 
@@ -224,6 +278,7 @@ public class Controller {
       e.printStackTrace();
     }
   }
+
 
   /**
    * This is a method called test multimedia to demonstrate functionality in the code.

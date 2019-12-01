@@ -9,6 +9,10 @@ enum ItemType {  // creates enum item to store type and code information
   AUDIO("AU"), VISUAL("VI"), AUDIO_MOBILE("AM"), VISUAL_MOBILE("VM");
 
 
+  public void setCode(String code) {
+    this.code = code;
+  }
+
   public String code;
 
 
