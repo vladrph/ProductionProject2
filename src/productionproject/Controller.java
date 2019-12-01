@@ -117,7 +117,7 @@ public class Controller {
       ProductionRecord pr = new ProductionRecord(productProduced, itemCount++);
       // using the iterator as the product id for testing
       System.out.println(pr.toString());
-      textArea.appendText(pr.toString());
+      textArea.appendText(pr.toString()+"\n");
     }
 
 
