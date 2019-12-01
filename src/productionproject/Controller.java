@@ -105,7 +105,21 @@ public class Controller {
     String manuText = manuField2.getText();
     ItemType type = itemType.getValue();
     textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
-    textArea.appendText(nameText + "  " + manuText + "  " + type + "\n"); // adds information of
+    // textArea.appendText(nameText + "  " + manuText + "  " + type + "\n"); // adds information of
+
+    Product productProduced = new Widget(nameText, manuText, type);
+
+    // test constructor used when creating production records from user interface
+    int numProduced = 1;  // this will come from the combobox in the UI
+    int itemCount = 0;
+
+    for (int productionRunProduct = 0; productionRunProduct < numProduced; productionRunProduct++) {
+      ProductionRecord pr = new ProductionRecord(productProduced, itemCount++);
+      // using the iterator as the product id for testing
+      System.out.println(pr.toString());
+      textArea.appendText(pr.toString());
+    }
+
 
   }
 
