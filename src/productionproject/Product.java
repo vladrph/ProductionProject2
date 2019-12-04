@@ -4,20 +4,22 @@ package productionproject;
 public abstract class Product implements Item {
 
   private int Id;
-  private ItemType Type;
+  private ItemType type;
   public String manufacturer;
   private String Name;
+
+
 
   public void setId(int id) {
     Id = id;
   }
 
   public ItemType getType() {
-    return Type;
+    return type;
   }
 
   public void setType(ItemType type) {
-    Type = type;
+    this.type = type;
   }
 
   /**
@@ -31,13 +33,13 @@ public abstract class Product implements Item {
   public Product(String name, String manufacturer, ItemType type) {
     this.Name = name;
     this.manufacturer = manufacturer;
-    Type = type;
+    this.type = type;
   }
 
 
   public String toString() {
     return "Name: " + Name + "\n" + "Manufacturer: " + manufacturer + "\n" + "Type: "
-        + Type;
+        + type;
   }
 
   public int getId() {
@@ -66,7 +68,7 @@ class Widget extends Product {
 
   Widget(String name, String manufacturer, ItemType type) {
     super(name, manufacturer, type);
-    this.setType(type);
+    //setType(type);
   }
 
 }

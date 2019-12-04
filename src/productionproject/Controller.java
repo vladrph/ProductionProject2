@@ -1,6 +1,9 @@
 package productionproject;
 
 import static productionproject.ItemType.AUDIO;
+import static productionproject.ItemType.AUDIO_MOBILE;
+import static productionproject.ItemType.VISUAL;
+import static productionproject.ItemType.VISUAL_MOBILE;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -61,7 +64,8 @@ public class Controller {
   @FXML
   private TableColumn<?, ?> manuNameCol;
   @FXML
-  private TableColumn<Product, ItemType> typeNameCol;
+  private TableColumn<?, ?> typeNameCol;
+  //private TableColumn<Product, ItemType> typeNameCol;
   @FXML
   private TextField prodField1; // change name of product field
 
@@ -104,20 +108,21 @@ public class Controller {
     String nameText = prodField1.getText();
     String manuText = manuField2.getText();
     ItemType type = itemType.getValue();
+    //int numProduced = Integer.parseInt(String.valueOf(comboBox.getItems()));
     textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
     // textArea.appendText(nameText + "  " + manuText + "  " + type + "\n"); // adds information of
 
-    Product productProduced = new Widget(nameText, manuText, type);
+    Widget productProduced = new Widget(nameText, manuText, type);
 
     // test constructor used when creating production records from user interface
-    int numProduced = 1;  // this will come from the combobox in the UI
+    int numProduced = 2;  // this will come from the combobox in the UI
     int itemCount = 0;
 
     for (int productionRunProduct = 0; productionRunProduct < numProduced; productionRunProduct++) {
       ProductionRecord pr = new ProductionRecord(productProduced, itemCount++);
       // using the iterator as the product id for testing
       System.out.println(pr.toString());
-      textArea.appendText(pr.toString()+"\n");
+      textArea.appendText(pr.toString() + "\n");
     }
 
 
@@ -193,10 +198,32 @@ public class Controller {
         String name = rs.getString(2);
         String manufacturer = rs.getString(4);
         String type = rs.getString(3); // itemType.getValue();
+        ItemType temp;
+        temp = null;
+        if (type.equals("AUDIO")) {
+          temp = AUDIO;
+          System.out.println("Audio");
+        } else if (type.equals("VISUAL")) {
+          temp = VISUAL;
+          System.out.println("Visual");
+
+        } else if (type.equals("AUDIO_MOBILE")) {
+
+          temp = AUDIO_MOBILE;
+          System.out.println("Audio Mobile");
+
+        } else if (type.equals("Visual Mobile")) {
+          temp = VISUAL_MOBILE;
+          System.out.println("Visual Mobile");
+
+        } else {
+          System.out.println("null");
+        }
 
         // create object
-
-        Widget productFromDB = new Widget(name, manufacturer, itemType.getValue());
+        Product productFromDB = new Widget(name, manufacturer, temp);
+        //Widget productFromDB = new Widget(name, manufacturer, itemType.getValue());
+        // Widget productFromDB = new Widget(name, manufacturer, ItemType.valueOf(type));
 
         // save to observable list
         productLine.add(productFromDB);
