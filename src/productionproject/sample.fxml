@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="813.0" styleClass="root" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="productionproject.Controller">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="813.0" styleClass="root" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="productionproject.Controller">
   <tabs>
     <Tab id="tab" text="Product Line">
       <content>
@@ -42,7 +42,8 @@
                   </GridPane>
                   <Button fx:id="productButton" layoutX="476.0" layoutY="166.0" mnemonicParsing="false" onMouseClicked="#addproduct" prefHeight="25.0" prefWidth="131.0" text="Add Product" />
                   <TableView fx:id="productTableView" layoutY="230.0" prefHeight="257.0" prefWidth="813.0">
-                    <columns>
+
+                      <columns>
                       <TableColumn fx:id="prodNameCol" prefWidth="116.0" text="Name" />
                       <TableColumn fx:id="manuNameCol" prefWidth="106.0" text="Manufacturer" />
                         <TableColumn fx:id="typeNameCol" prefWidth="75.0" text="Type" />
@@ -56,7 +57,7 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="857.0" styleClass="root" stylesheets="@Background1.css">
                <children>
                   <Label fx:id="label" layoutX="29.0" layoutY="10.0" prefHeight="31.0" prefWidth="177.0" text="         Choose Product" />
-                  <ListView layoutX="29.0" layoutY="41.0" prefHeight="256.0" prefWidth="592.0" />
+                  <ListView fx:id="listView" layoutX="29.0" layoutY="41.0" prefHeight="256.0" prefWidth="592.0" />
                   <Label layoutX="41.0" layoutY="321.0" prefHeight="27.0" prefWidth="117.0" text="  Choose Quantity" />
                   <ComboBox fx:id="comboBox" layoutX="41.0" layoutY="348.0" onAction="#initializeValue" onMouseClicked="#initializeValue" prefWidth="150.0" />
                   <Button fx:id="recordButton" layoutX="407.0" layoutY="348.0" mnemonicParsing="false" onMouseClicked="#printproduct2" prefHeight="25.0" prefWidth="160.0" text="Record Production" />
