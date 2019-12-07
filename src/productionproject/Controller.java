@@ -82,6 +82,7 @@ public class Controller {
   @FXML
   private //ListView listView;
       ListView<Product> listView = new ListView<Product>();
+  private Object Timestamp;
 
 
   /**
@@ -321,6 +322,10 @@ public class Controller {
    */
   public void initializeProductionRecordDB() {
 
+    Date date = new Date();
+    long time = date.getTime();
+    Timestamp ts = new Timestamp(time);
+
     // String nameText = prodField1.getText();   // Gets information from production field
     // String manuText = manuField2.getText();   // Gets information from Manufacturer field
     //  ItemType type = itemType.getValue();      // Gets information from Item Type choice box.
@@ -366,8 +371,8 @@ public class Controller {
       String manu = listItems.getManufacturer();
       ItemType type = listItems.getType();
 
-      Date date = new Date();
-      String tempDate = date.toString();
+
+     // String tempDate = date.toString();
 
       Product productProduced = new Widget(id, name, manu, type);
       // Product productProduced = new Widget(listView.getTypeSelector(), "Apple", AUDIO);
@@ -389,7 +394,7 @@ public class Controller {
       String sql =
           "INSERT INTO PRODUCTIONRECORD" + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED) "
               + " VALUES ( '" + id + "', '" + numProduced + "', '" + manu.substring(0, 3)
-              + type.code + "0000" + itemCount + "', '" + date
+              + type.code + "0000" + itemCount + "', '" + ts
               + "' )";  // this sql statement gets information from the
       //  text fields and choice box and loads them into the database.
 

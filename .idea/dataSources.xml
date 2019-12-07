@@ -13,5 +13,11 @@
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:$PROJECT_DIR$/res/ProductDatabase</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="H2 - default@localhost" uuid="120d2853-c585-48d5-b795-4c3c94898824">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:tcp://localhost:9092/default</jdbc-url>
+    </data-source>
   </component>
 </project>

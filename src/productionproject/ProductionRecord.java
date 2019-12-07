@@ -1,5 +1,6 @@
 package productionproject;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class ProductionRecord {
@@ -10,7 +11,8 @@ public class ProductionRecord {
   Date dateProduced;
   int itemCount;
   private Product productProduced;
-
+  private Object Timestamp;
+  Timestamp ts = new Timestamp(10000);
   ProductionRecord(int productID) {
 
     productionNumber = 0;
@@ -70,7 +72,7 @@ public class ProductionRecord {
     return
         "Prod. Num: " + productionNumber + " Product ID: " + productID + " Serial Num: "
             + productProduced.getManufacturer().substring(0, 3) + productProduced.getType().code
-            + "0000" + itemCount + " Date: " + new Date(); /* Mon Oct 14 10:29:48 UTC 2019*/
+            + "0000" + itemCount + " Date: " + ts; /* Mon Oct 14 10:29:48 UTC 2019*/
   }
 
 
