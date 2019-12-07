@@ -33,7 +33,7 @@ public class ProductionRecord {
   ProductionRecord(int productionNumber,  String serialNumber, Date dateProduced) {
 
     this.productionNumber = productionNumber;
-    //this.productID = productID;
+    this.productID = productID;
     this.serialNumber = serialNumber;
     this.dateProduced = dateProduced;
 
@@ -48,6 +48,12 @@ public class ProductionRecord {
    */
   public ProductionRecord(Product productProduced, int itemCount) {
 
+    this.productProduced = productProduced;
+    this.itemCount = itemCount;
+
+  }
+  public ProductionRecord(int productID,Product productProduced, int itemCount) {
+    this.productID =productID;
     this.productProduced = productProduced;
     this.itemCount = itemCount;
 

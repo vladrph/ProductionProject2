@@ -9,18 +9,6 @@ public abstract class Product implements Item {
   private String Name;
 
 
-  public void setId(int id) {
-    Id = id;
-  }
-
-  public ItemType getType() {
-    return type;
-  }
-
-  public void setType(ItemType type) {
-    this.type = type;
-  }
-
   /**
    * Product constructor holds a String of type name and manufacturer  and a Item type called type.
    *
@@ -36,11 +24,12 @@ public abstract class Product implements Item {
   }
 
   /**
-   *  Created a new constructor that also holds a id parameter for future use
-   * @param id   holds id
-   * @param name   holds name
-   * @param manufacturer  hold manufacturer
-   * @param type holds Item type
+   * Created a new constructor that also holds a id parameter for future use
+   *
+   * @param id           holds id
+   * @param name         holds name
+   * @param manufacturer hold manufacturer
+   * @param type         holds Item type
    */
   public Product(int id, String name, String manufacturer, ItemType type) {
     this.Id = id;
@@ -51,7 +40,20 @@ public abstract class Product implements Item {
 
   public String toString() {
     return "Name: " + Name + "\n" + "Manufacturer: " + manufacturer + "\n" + "Type: "
-        + type;
+        + type ;
+  }
+
+  public int setId(int id) {
+   this.Id = id;
+    return id;
+  }
+
+  public ItemType getType() {
+    return type;
+  }
+
+  public void setType(ItemType type) {
+    this.type = type;
   }
 
   public int getId() {

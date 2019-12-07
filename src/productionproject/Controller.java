@@ -1,5 +1,7 @@
 package productionproject;
 
+import static org.h2.expression.function.DateTimeFunctions.getDatePart;
+import static org.h2.expression.function.DateTimeFunctions.parseDateTime;
 import static productionproject.ItemType.AUDIO;
 import static productionproject.ItemType.AUDIO_MOBILE;
 import static productionproject.ItemType.VISUAL;
@@ -10,8 +12,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,6 +42,7 @@ import javafx.scene.text.Font;
  * @author Vladimir Petit-Homme
  */
 public class Controller {
+
 
   @FXML
   public ChoiceBox<ItemType> itemType;
@@ -120,27 +125,27 @@ public class Controller {
 
     System.out.println("This is the item on the list that I choose" + "\n"
         + listItems); // this is the test for the list Items
-
+    int id = listItems.getId();
     String name = listItems.getName();
     String manu = listItems.getManufacturer();
     ItemType type = listItems.getType();
 
     int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
 
-    Product productProduced = new Widget(name, manu, type);
+    Product productProduced = new Widget(id, name, manu, type);
 
     // test constructor used when creating production records from user interface
 
     int itemCount = 0;
 
     for (int productionRunProduct = 0; productionRunProduct < numProduced; productionRunProduct++) {
-      ProductionRecord pr = new ProductionRecord(productProduced, itemCount++);
+      ProductionRecord pr = new ProductionRecord(id, productProduced, itemCount++);
 
       // using the iterator as the product id for testing
       System.out.println(pr.toString());
       textArea.appendText(pr.toString() + "\n");
     }
-
+    System.out.println(" The id number is " + id);
     System.out.println("numProduced is " + numProduced);
 
 
@@ -293,7 +298,7 @@ public class Controller {
 
     System.out.println("Test for Record Production button"); // test button for Record Production
     productionLog();
-    //initializeProductionRecordDB();
+    initializeProductionRecordDB();
     // Product product1 = new Widget(nameText, manuText, type);
     // System.out.println(product1.toString());  // prints out name manufacturer and type
     // listView.getItems().add(product1.toString() + "\n");
@@ -340,7 +345,7 @@ public class Controller {
       //STEP 3: Execute a query
       stmt = conn.createStatement();
 
-      System.out.println("Inserting records into the table...");
+      System.out.println("Inserting production records into the table...");
 
       textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
       String comboNumber = comboBox
@@ -356,8 +361,15 @@ public class Controller {
           + listItems); // this is the test for the list Items
 
       int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
+      int id = listItems.getId();
+      String name = listItems.getName();
+      String manu = listItems.getManufacturer();
+      ItemType type = listItems.getType();
 
-      Product productProduced = new Widget("name", "manu", ItemType.AUDIO);
+      Date date = new Date();
+      String tempDate = date.toString();
+
+      Product productProduced = new Widget(id, name, manu, type);
       // Product productProduced = new Widget(listView.getTypeSelector(), "Apple", AUDIO);
       // test constructor used when creating production records from user interface
 
@@ -374,16 +386,17 @@ public class Controller {
       // ProductionRecord pr = new ProductionRecord( 0);
       System.out.println("numProduced is " + numProduced);
 
-      // String sql =
-      // "INSERT INTO PRODUCTIONRECORD" + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED) "
-      //  + " VALUES ( '" + productProduced.getId() + "', '" + numProduced + "', '" + pr
-      //.getSerialNum() + "', '" + pr.getProdDate()
-      //     + "' )";  // this sql statement gets information from the
+      String sql =
+          "INSERT INTO PRODUCTIONRECORD" + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED) "
+              + " VALUES ( '" + id + "', '" + numProduced + "', '" + manu.substring(0, 3)
+              + type.code + "0000" + itemCount + "', '" + date
+              + "' )";  // this sql statement gets information from the
       //  text fields and choice box and loads them into the database.
 
-      // stmt.executeUpdate(sql);
+      stmt.executeUpdate(sql);
 
-      System.out.println("Inserted records into the table...");
+      System.out.println("Inserted production records into the table...");
+      System.out.println(sql);
 
       // STEP 4: Clean-up environment
       stmt.close();
