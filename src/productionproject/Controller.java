@@ -76,7 +76,7 @@ public class Controller {
   private TextArea textArea;
   @FXML
   private //ListView listView;
-      ListView<String> listView = new ListView<String>();
+      ListView<Product> listView = new ListView<Product>();
 
 
   /**
@@ -115,15 +115,19 @@ public class Controller {
     System.out.println(
         "This is the comboNumber I choose " + comboNumber); // this is the test for the combo number
 
-    String listItems = listView.getSelectionModel()
+    Product listItems = listView.getSelectionModel()
         .getSelectedItem(); // this line will allow me to choose items from the list view
 
     System.out.println("This is the item on the list that I choose" + "\n"
         + listItems); // this is the test for the list Items
 
+    String name = listItems.getName();
+    String manu = listItems.getManufacturer();
+    ItemType type = listItems.getType();
+
     int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
 
-    Product productProduced = new Widget("name", "Apple", ItemType.AUDIO);
+    Product productProduced = new Widget(name, manu, type);
 
     // test constructor used when creating production records from user interface
 
@@ -255,7 +259,7 @@ public class Controller {
         // save to observable list
         productLine.add(productFromDB); //adds info form database to product line
         //listView.getItems().add(String.valueOf(productFromDB));//another way to add products
-        listView.getItems().add(productFromDB.toString());
+        listView.getItems().add(productFromDB);
         //listView.setSelectionModel(productFromDB.toString());
         int productionNumber = rs.getRow(); // get row id
         System.out.println(productionNumber);
@@ -345,17 +349,12 @@ public class Controller {
       System.out.println("This is the comboNumber I choose "
           + comboNumber); // this is the test for the combo number
 
-      String listItems = listView.getSelectionModel()
+      Product listItems = listView.getSelectionModel()
           .getSelectedItem(); // this line will allow me to choose items from the list view
 
       System.out.println("This is the item on the list that I choose" + "\n"
           + listItems); // this is the test for the list Items
-      //ObservableList selectedIndices =
-      //     listView.getSelectionModel().getSelectedIndices();
 
-      // String name = String.valueOf(selectedIndices.get(1));
-      //String manu = String.valueOf(selectedIndices.get(2));
-      //int numProduced = Integer.parseInt(String.valueOf(comboBox.getItems()));
       int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
 
       Product productProduced = new Widget("name", "manu", ItemType.AUDIO);
