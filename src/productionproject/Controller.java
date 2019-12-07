@@ -371,15 +371,14 @@ public class Controller {
       String manu = listItems.getManufacturer();
       ItemType type = listItems.getType();
 
-
-     // String tempDate = date.toString();
+      // String tempDate = date.toString();
 
       Product productProduced = new Widget(id, name, manu, type);
       // Product productProduced = new Widget(listView.getTypeSelector(), "Apple", AUDIO);
       // test constructor used when creating production records from user interface
 
       int itemCount = 0;
-
+      int numCount = 0;
       for (int productionRunProduct = 0; productionRunProduct < numProduced;
           productionRunProduct++) {
         ProductionRecord pr = new ProductionRecord(productProduced, itemCount++);
@@ -387,31 +386,33 @@ public class Controller {
         // using the iterator as the product id for testing
 
         textArea.appendText(pr.toString() + "\n");
+        //} // 1st end brace for production run project
+        // ProductionRecord pr = new ProductionRecord( 0);
+        System.out.println("numProduced is " + numProduced);
+       System.out.println("num count is "+ numCount);
+        numCount++;
+        String sql =
+            "INSERT INTO PRODUCTIONRECORD"
+                + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED) "
+                + " VALUES ( '" + id + "', '" + numCount + "', '" + manu.substring(0, 3)
+                + type.code + "0000" + itemCount + "', '" + ts
+                + "' )";  // this sql statement gets information from the
+        //  text fields and choice box and loads them into the database.
+
+        stmt.executeUpdate(sql);
+
+        System.out.println("Inserted production records into the table...");
+        System.out.println(sql);
+      }//  new brace
+        // STEP 4: Clean-up environment
+        stmt.close();
+        conn.close();
+      } catch(ClassNotFoundException e){
+        e.printStackTrace();
+
+      } catch(SQLException e){
+        e.printStackTrace();
       }
-      // ProductionRecord pr = new ProductionRecord( 0);
-      System.out.println("numProduced is " + numProduced);
-
-      String sql =
-          "INSERT INTO PRODUCTIONRECORD" + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED) "
-              + " VALUES ( '" + id + "', '" + numProduced + "', '" + manu.substring(0, 3)
-              + type.code + "0000" + itemCount + "', '" + ts
-              + "' )";  // this sql statement gets information from the
-      //  text fields and choice box and loads them into the database.
-
-      stmt.executeUpdate(sql);
-
-      System.out.println("Inserted production records into the table...");
-      System.out.println(sql);
-
-      // STEP 4: Clean-up environment
-      stmt.close();
-      conn.close();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
 
   }
 
