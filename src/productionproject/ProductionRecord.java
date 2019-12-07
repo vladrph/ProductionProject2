@@ -30,6 +30,16 @@ public class ProductionRecord {
 
   }
 
+  ProductionRecord(int productionNumber,  String serialNumber, Date dateProduced) {
+
+    this.productionNumber = productionNumber;
+    //this.productID = productID;
+    this.serialNumber = serialNumber;
+    this.dateProduced = dateProduced;
+
+
+  }
+
   /**
    * This method contains the fields used to increment the number of items for the serial number.
    *
@@ -76,7 +86,8 @@ public class ProductionRecord {
   }
 
   public String getSerialNum() {
-    return serialNumber;
+    return  productProduced.getManufacturer().substring(0, 3) + productProduced.getType().code
+        + "0000" + itemCount;
   }
 
   public void setSerialNum(String serialNumber) {
@@ -84,11 +95,11 @@ public class ProductionRecord {
   }
 
   public Date getProdDate() {
-    return dateProduced;
+    return new Date();
   }
 
   public void setProdDate(Date dateProduced) {
-    this.dateProduced = dateProduced;
+    dateProduced = dateProduced;
   }
 
 }
