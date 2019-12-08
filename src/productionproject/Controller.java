@@ -371,11 +371,11 @@ public class Controller {
       int numCount = 0;
       for (int productionRunProduct = 0; productionRunProduct < numProduced;
           productionRunProduct++) {
-        ProductionRecord pr = new ProductionRecord(productProduced, itemCount++);
+        //ProductionRecord pr = new ProductionRecord(productProduced, itemCount++);
 
         // using the iterator as the product id for testing
 
-        textArea.appendText(pr.toString() + "\n");
+        //textArea.appendText(pr.toString() + "\n");
         //} // 1st end brace for production run project
         // ProductionRecord pr = new ProductionRecord( 0);
         System.out.println("numProduced is " + numProduced);
@@ -388,6 +388,11 @@ public class Controller {
                 + type.code + "0000" + itemCount + "', '" + ts
                 + "' )";  // this sql statement gets information from the
         //  text fields and choice box and loads them into the database.
+
+        textArea.appendText(
+            " Prod. Num: " + numCount + " Product ID: " + id + " Serial Num: " + manu
+                .substring(0, 3)
+                + type.code + "0000" + itemCount + " Date: " + ts + "\n");
 
         System.out.println("Inserted production records into the table...");
         System.out.println(sql);
@@ -410,8 +415,8 @@ public class Controller {
 
 
   /**
-   * This will be a new method that updates the text area with the production record log.
-   * This method reads information from the Production Record database
+   * This will be a new method that updates the text area with the production record log. This
+   * method reads information from the Production Record database
    */
   public void productionAreaLog() {
 
