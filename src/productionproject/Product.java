@@ -1,6 +1,11 @@
 package productionproject;
 
-
+/**
+ * This controller document has the contains the product class for the Production Project2 GUI
+ * project.
+ *
+ * @author Vladimir Petit-Homme
+ */
 public abstract class Product implements Item {
 
   private int Id;
@@ -24,7 +29,7 @@ public abstract class Product implements Item {
   }
 
   /**
-   * Created a new constructor that also holds a id parameter for future use
+   * Created a new constructor that also holds a id parameter for future use.
    *
    * @param id           holds id
    * @param name         holds name
@@ -40,11 +45,11 @@ public abstract class Product implements Item {
 
   public String toString() {
     return "Name: " + Name + "\n" + "Manufacturer: " + manufacturer + "\n" + "Type: "
-        + type ;
+        + type;
   }
 
   public int setId(int id) {
-   this.Id = id;
+    this.Id = id;
     return id;
   }
 

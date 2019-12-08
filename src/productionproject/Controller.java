@@ -1,7 +1,5 @@
 package productionproject;
 
-import static org.h2.expression.function.DateTimeFunctions.getDatePart;
-import static org.h2.expression.function.DateTimeFunctions.parseDateTime;
 import static productionproject.ItemType.AUDIO;
 import static productionproject.ItemType.AUDIO_MOBILE;
 import static productionproject.ItemType.VISUAL;
@@ -81,8 +79,7 @@ public class Controller {
   private TextArea textArea;
   @FXML
   private //ListView listView;
-      ListView<Product> listView = new ListView<Product>();
-  private Object Timestamp;
+      ListView<Product> listView = new ListView<>();
 
 
   /**
@@ -110,7 +107,7 @@ public class Controller {
   }
 
   /**
-   * This method will show the production log in the Production Log tab TextArea.
+   * This method prints the Production log info to the console.
    */
   public void productionLog() {
 
@@ -144,9 +141,9 @@ public class Controller {
 
       // using the iterator as the product id for testing
       System.out.println(pr.toString());
-      textArea.appendText(pr.toString() + "\n");
+      // textArea.appendText(pr.toString() + "\n");
     }
-    System.out.println(" The id number is " + id);
+
     System.out.println("numProduced is " + numProduced);
 
 
@@ -182,7 +179,7 @@ public class Controller {
     typeNameCol.setCellValueFactory(new PropertyValueFactory("type"));
 
     testMultimedia();
-
+    productionAreaLog();
 
   }
 
@@ -226,14 +223,12 @@ public class Controller {
 
       while (rs.next()) {
         // these lines correspond to the database table columns
-        String id = rs.getString(1);
+
         String name = rs.getString(2);
         String manufacturer = rs.getString(4);
         String type = rs.getString(3); //
-
+        String id = rs.getString(1);
         ItemType temp;
-        temp = null;
-        int idTemp = Integer.parseInt(id);
 
         if (type.equals("AUDIO")) {
           temp = AUDIO;
@@ -253,6 +248,7 @@ public class Controller {
 
         } else {
           System.out.println("null");
+          temp = null;
         }
         if (manufacturer.equals("")) {
           manufacturer = "ERROR";
@@ -260,13 +256,13 @@ public class Controller {
         if (name.equals("")) {
           name = "ERROR";
         }
-
-        Product productFromDB = new Widget(name, manufacturer, temp); // Create object
+        int idTemp = Integer.parseInt(id);
+        Product productFromDB = new Widget(idTemp, name, manufacturer, temp); // Create object
         // save to observable list
         productLine.add(productFromDB); //adds info form database to product line
         //listView.getItems().add(String.valueOf(productFromDB));//another way to add products
         listView.getItems().add(productFromDB);
-        //listView.setSelectionModel(productFromDB.toString());
+
         int productionNumber = rs.getRow(); // get row id
         System.out.println(productionNumber);
 
@@ -293,16 +289,10 @@ public class Controller {
   @FXML
   void printproduct2(MouseEvent event1) {
 
-    //String nameText = prodField1.getText();
-    //String manuText = manuField2.getText();
-    //  ItemType type = itemType.getValue();
-
     System.out.println("Test for Record Production button"); // test button for Record Production
     productionLog();
     initializeProductionRecordDB();
-    // Product product1 = new Widget(nameText, manuText, type);
-    // System.out.println(product1.toString());  // prints out name manufacturer and type
-    // listView.getItems().add(product1.toString() + "\n");
+
 
   }
 
@@ -389,7 +379,7 @@ public class Controller {
         //} // 1st end brace for production run project
         // ProductionRecord pr = new ProductionRecord( 0);
         System.out.println("numProduced is " + numProduced);
-       System.out.println("num count is "+ numCount);
+        System.out.println("num count is " + numCount);
         numCount++;
         String sql =
             "INSERT INTO PRODUCTIONRECORD"
@@ -399,20 +389,73 @@ public class Controller {
                 + "' )";  // this sql statement gets information from the
         //  text fields and choice box and loads them into the database.
 
-        stmt.executeUpdate(sql);
-
         System.out.println("Inserted production records into the table...");
         System.out.println(sql);
-      }//  new brace
-        // STEP 4: Clean-up environment
-        stmt.close();
-        conn.close();
-      } catch(ClassNotFoundException e){
-        e.printStackTrace();
 
-      } catch(SQLException e){
-        e.printStackTrace();
+        stmt.executeUpdate(sql);
+
+
       }
+      // STEP 4: Clean-up environment
+      stmt.close();
+      conn.close();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+  }
+
+
+  /**
+   * This will be a new method that updates the text area with the production record log.
+   * This method reads information from the Production Record database
+   */
+  public void productionAreaLog() {
+
+    final String jdbc_driver = "org.h2.Driver";
+    final String db_url = "jdbc:h2:./res/ProductDatabase";
+
+    //  Database credentials
+    final String user = "";
+    final String pass = "";
+    Connection conn = null;
+    Statement stmt = null;
+
+    try {
+
+      // STEP 1: Register JDBC driver
+      Class.forName(jdbc_driver);
+      //STEP 2: Open a connection
+      conn = DriverManager.getConnection(db_url, user, pass);
+      stmt = conn.createStatement();
+      String sql = "SELECT * FROM PRODUCTIONRECORD";
+
+      ResultSet rs = stmt.executeQuery(sql);
+
+      while (rs.next()) {
+        // these lines correspond to the database table columns
+        String prodId = rs.getString(1);
+        String prodNum = rs.getString(2);
+        String serialNum = rs.getString(3);
+        String prodDate = rs.getString(4);
+        textArea.appendText(
+            " Prod. Num: " + prodNum + " Product ID: " + prodId + " Serial Num:" + serialNum
+                + " Date: "
+                + prodDate + "\n");
+        textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
+
+      }
+      stmt.close();
+      conn.close();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
   }
 

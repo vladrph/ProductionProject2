@@ -1,5 +1,12 @@
 package productionproject;
 
+/**
+ * This  document contains the Screen information which implements Screen Spec interface  for the
+ * Production Project2 GUI project.
+ *
+ * @author Vladimir Petit-Homme
+ */
+
 public class Screen implements ScreenSpec {
 
   String resolution;
@@ -13,7 +20,7 @@ public class Screen implements ScreenSpec {
   }
 
   /**
-   *  Prints information of resolution, refresh rate, and response time.
+   * Prints information of resolution, refresh rate, and response time.
    *
    * @return
    */

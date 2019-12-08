@@ -1,10 +1,16 @@
 package productionproject;
 
+/**
+ * This  document has the Movie Player class  which implements Multimedia Control for the Production
+ * Project2 GUI project.
+ *
+ * @author Vladimir Petit-Homme
+ */
+
 public class MoviePlayer extends Product implements MultimediaControl {
 
   Screen screen;
   MonitorType monitorType;
-
 
 
   MoviePlayer(String name, String manufactuer, Screen screen, MonitorType monitorType) {
@@ -16,7 +22,8 @@ public class MoviePlayer extends Product implements MultimediaControl {
   }
 
   /**
-   *  String toString method that prints out th screen and monitor type.
+   * String toString method that prints out th screen and monitor type.
+   *
    * @return
    */
 

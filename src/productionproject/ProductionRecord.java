@@ -3,42 +3,46 @@ package productionproject;
 import java.sql.Timestamp;
 import java.util.Date;
 
+/**
+ * This  document has the contains the production record information for the Production Project2 GUI
+ * project.
+ *
+ * @author Vladimir Petit-Homme
+ */
+
 public class ProductionRecord {
 
   int productionNumber;
   int productID;
-  String serialNumber;
-  Date dateProduced;
   int itemCount;
   private Product productProduced;
-  private Object Timestamp;
-  Timestamp ts = new Timestamp(10000);
+  Date date = new Date();
+  long time = date.getTime();
+  Timestamp ts = new Timestamp(time);
+
   ProductionRecord(int productID) {
 
     productionNumber = 0;
     String serialNumber = "0";
-    dateProduced = new Date();
-    this.serialNumber = serialNumber;
-
+    //dateProduced = new Date();
+    //this.serialNumber = serialNumber;
 
   }
 
   ProductionRecord(int productionNumber, int productID, String serialNumber, Date dateProduced) {
     this.productionNumber = productionNumber;
     this.productID = productID;
-    this.serialNumber = serialNumber;
-    this.dateProduced = dateProduced;
-
+    //this.serialNumber = serialNumber;
+    //this.dateProduced = dateProduced;
 
   }
 
-  ProductionRecord(int productionNumber,  String serialNumber, Date dateProduced) {
+  ProductionRecord(int productionNumber, String serialNumber, Date dateProduced) {
 
     this.productionNumber = productionNumber;
-    this.productID = productID;
-    this.serialNumber = serialNumber;
-    this.dateProduced = dateProduced;
-
+    //this.productID = productID;
+    //this.serialNumber = serialNumber;
+    //this.dateProduced = dateProduced;
 
   }
 
@@ -54,8 +58,17 @@ public class ProductionRecord {
     this.itemCount = itemCount;
 
   }
-  public ProductionRecord(int productID,Product productProduced, int itemCount) {
-    this.productID =productID;
+
+  /**
+   * Production record field that contains the fields used to increment the number of items for the
+   * serial number. Along with an ProductId field.
+   *
+   * @param productID       Holds the productID  information
+   * @param productProduced produces new product
+   * @param itemCount       Increments the serial number
+   */
+  public ProductionRecord(int productID, Product productProduced, int itemCount) {
+    this.productID = productID;
     this.productProduced = productProduced;
     this.itemCount = itemCount;
 
@@ -94,20 +107,13 @@ public class ProductionRecord {
   }
 
   public String getSerialNum() {
-    return  productProduced.getManufacturer().substring(0, 3) + productProduced.getType().code
+    return productProduced.getManufacturer().substring(0, 3) + productProduced.getType().code
         + "0000" + itemCount;
-  }
-
-  public void setSerialNum(String serialNumber) {
-    this.serialNumber = serialNumber;
   }
 
   public Date getProdDate() {
     return new Date();
   }
 
-  public void setProdDate(Date dateProduced) {
-    dateProduced = dateProduced;
-  }
 
 }
