@@ -367,7 +367,7 @@ public class Controller {
 
       // String tempDate = date.toString();
 
-      Product productProduced = new Widget(id, name, manu, type);
+      //Product productProduced = new Widget(id, name, manu, type);
       // Product productProduced = new Widget(listView.getTypeSelector(), "Apple", AUDIO);
       // test constructor used when creating production records from user interface
 
@@ -550,6 +550,8 @@ public class Controller {
       p.stop();
       p.next();
       p.previous();
+      mediaTextArea
+          .setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
       mediaTextArea.appendText(String.valueOf(p));
 
     }
