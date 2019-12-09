@@ -80,6 +80,10 @@ public class Controller {
   @FXML
   private //ListView listView;
       ListView<Product> listView = new ListView<>();
+  @FXML
+  private TextArea mediaTextArea;
+  @FXML
+  private Button mediaButton;
 
 
   /**
@@ -178,7 +182,7 @@ public class Controller {
     manuNameCol.setCellValueFactory(new PropertyValueFactory("manufacturer"));
     typeNameCol.setCellValueFactory(new PropertyValueFactory("type"));
 
-    testMultimedia();
+    //testMultimedia();
     productionAreaLog();
 
   }
@@ -518,11 +522,20 @@ public class Controller {
     }
   }
 
+  @FXML
+  void playMediainfo(MouseEvent event2) {
+
+    System.out.println("Test for Media Production button"); // test button for Record Production
+    testMultimedia();
+
+
+  }
+
 
   /**
    * This is a method called test multimedia to demonstrate functionality in the code.
    */
-  public static void testMultimedia() {
+  public void testMultimedia() {
     AudioPlayer newAudioProduct = new AudioPlayer("DP-X1A", "Onkyo",
         "DSD/FLAC/ALAC/WAV/AIFF/MQA/Ogg-Vorbis/MP3/AAC", "M3U/PLS/WPL");
     Screen newScreen = new Screen("720x480", 40, 22);
@@ -537,7 +550,10 @@ public class Controller {
       p.stop();
       p.next();
       p.previous();
+      mediaTextArea.appendText(String.valueOf(p));
+
     }
+
   }
 
 
