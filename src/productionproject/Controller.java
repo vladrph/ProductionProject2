@@ -506,7 +506,7 @@ public class Controller {
 
       int id = listItems.getId();
 
-      String name = listItems.getName();
+      // String name = listItems.getName();
 
       String manu = listItems.getManufacturer();
 
