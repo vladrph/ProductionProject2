@@ -2,9 +2,15 @@ package productionproject;
 
 import static productionproject.ItemType.AUDIO;
 import static productionproject.ItemType.AUDIO_MOBILE;
+import static productionproject.ItemType.NULL;
 import static productionproject.ItemType.VISUAL;
 import static productionproject.ItemType.VISUAL_MOBILE;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,6 +20,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import java.util.Date;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +32,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -76,12 +87,28 @@ public class Controller {
   @FXML
   private TextField manuField2; // change name of manu field
   @FXML
+  private TextField employeeNameField; // Field to input Employee name
+
+  @FXML
+  private TextField passwordField; // Field to input Password
+
+  @FXML
+  private PasswordField passwordField1; // Field to input Password
+  @FXML
   private TextArea textArea;
+
+  @FXML
+  private
+        ObservableList<Product> produceline = FXCollections
+      .observableArrayList();
   @FXML
   private //ListView listView;
-      ListView<Product> listView = new ListView<>();
+      ListView<Product> listView = new ListView<>(produceline);
   @FXML
   private TextArea mediaTextArea;
+  @FXML
+  private TextArea employeeTextArea;
+
   @FXML
   private Button mediaButton;
 
@@ -93,20 +120,62 @@ public class Controller {
    *              connection.
    */
   @FXML
-  void addproduct(MouseEvent event) throws SQLException {
+  void addproduct(MouseEvent event) throws SQLException, IOException {
 
     System.out.println("Test for button for Add Product"); // Text button for print product
+
     //populateList();
+
     String nameText = prodField1.getText();   // Gets information from production field
+
     String manuText = manuField2.getText();   // Gets information from Manufacturer field
+
     ItemType type = itemType.getValue();      // Gets a value from the item type field
 
-    productLine.add(new Widget(nameText, manuText, type));
+    productLine.add(new Widget(nameText, manuText, type)); // adds to product line
+    produceline.add(new Widget(nameText, manuText, type)); //adds to list view
 
     initializeDB();        //establish the database connection
+
     prodField1.setText("");   // clears text field
+
     manuField2.setText("");  // clears text field
+
     itemType.setValue(null); // clears Choice Box field
+
+  }
+
+  /**
+   * This will be a new method to receive the Employee details.
+   */
+
+  public void newEmployee() {
+
+    employeeTextArea
+        .setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
+
+    String name = employeeNameField.getText(); // gets the Employee name field information
+
+    String passWord = passwordField1.getText(); // gets the Employee Password information
+
+    Employee employee = new Employee(name, passWord);
+
+    employeeTextArea.appendText(employee.toString());
+
+    employeeNameField.setText("");   // clears text field
+
+    passwordField1.setText("");  // clears text field
+  }
+
+  /**
+   * New Employee method that print out the employee information.
+   */
+  @FXML
+  void getEmployeeinfo(MouseEvent event3) {
+
+    System.out.println("Test for Employee button"); // test button for Employee Production
+
+    newEmployee();
 
   }
 
@@ -116,8 +185,33 @@ public class Controller {
   public void productionLog() {
 
     textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
+
     String comboNumber = comboBox
         .getValue();   // this  will allow me to pull the number from the combo box
+
+    if (comboNumber.equals("1")) {
+      comboNumber = "1";
+    } else if (comboNumber.equals("2")) {
+      comboNumber = "2";
+    } else if (comboNumber.equals("3")) {
+      comboNumber = "3";
+    } else if (comboNumber.equals("4")) {
+      comboNumber = "4";
+    } else if (comboNumber.equals("5")) {
+      comboNumber = "5";
+    } else if (comboNumber.equals("6")) {
+      comboNumber = "6";
+    } else if (comboNumber.equals("7")) {
+      comboNumber = "7";
+    } else if (comboNumber.equals("8")) {
+      comboNumber = "8";
+    } else if (comboNumber.equals("9")) {
+      comboNumber = "9";
+    } else if (comboNumber.equals("10")) {
+      comboNumber = "10";
+    } else {
+      comboNumber = "0";
+    }
 
     System.out.println(
         "This is the comboNumber I choose " + comboNumber); // this is the test for the combo number
@@ -128,8 +222,11 @@ public class Controller {
     System.out.println("This is the item on the list that I choose" + "\n"
         + listItems); // this is the test for the list Items
     int id = listItems.getId();
+
     String name = listItems.getName();
+
     String manu = listItems.getManufacturer();
+
     ItemType type = listItems.getType();
 
     int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
@@ -141,6 +238,7 @@ public class Controller {
     int itemCount = 0;
 
     for (int productionRunProduct = 0; productionRunProduct < numProduced; productionRunProduct++) {
+
       ProductionRecord pr = new ProductionRecord(id, productProduced, itemCount++);
 
       // using the iterator as the product id for testing
@@ -160,29 +258,42 @@ public class Controller {
    */
 
 
-  public void initialize() throws SQLException {
+  public void initialize() throws SQLException, IOException {
 
     comboBox.getItems().add("1");
+
     comboBox.getItems().add("2");
+
     comboBox.getItems().add("3");
+
     comboBox.getItems().add("4");
+
     comboBox.getItems().add("5");
+
     comboBox.getItems().add("6");
+
     comboBox.getItems().add("7");
+
     comboBox.getItems().add("8");
+
     comboBox.getItems().add("9");
+
     comboBox.getItems().add("10");
 
     itemType.getItems()
         .addAll(AUDIO, ItemType.VISUAL, ItemType.AUDIO_MOBILE, ItemType.VISUAL_MOBILE);
 
     productTableView.setItems(productLine);
+    listView.setItems(produceline);
+
     populateList();
+
     prodNameCol.setCellValueFactory(new PropertyValueFactory("name"));
+
     manuNameCol.setCellValueFactory(new PropertyValueFactory("manufacturer"));
+
     typeNameCol.setCellValueFactory(new PropertyValueFactory("type"));
 
-    //testMultimedia();
     productionAreaLog();
 
   }
@@ -203,19 +314,23 @@ public class Controller {
    */
 
 
-  public void populateList() throws SQLException {
+  public void populateList() throws SQLException, IOException {
 
+    Properties prop = new Properties();
+    prop.load(new FileInputStream("res/properties"));
     final String jdbc_driver = "org.h2.Driver";
     final String db_url = "jdbc:h2:./res/ProductDatabase";
 
     //  Database credentials
     final String user = "";
-    final String pass = "";
+    final String pass = prop.getProperty("password");
     Connection conn = null;
     Statement stmt = null;
+    // Employee employee = new Employee(user, pass);
+    try (OutputStream output = new FileOutputStream("res/properties")) {
 
-    try {
-
+      prop.store(output, null);
+      System.out.println(prop);
       // STEP 1: Register JDBC driver
       Class.forName(jdbc_driver);
       //STEP 2: Open a connection
@@ -229,47 +344,65 @@ public class Controller {
         // these lines correspond to the database table columns
 
         String name = rs.getString(2);
+
         String manufacturer = rs.getString(4);
-        String type = rs.getString(3); //
+
+        String type = rs.getString(3);
+
         String id = rs.getString(1);
+
         ItemType temp;
 
         if (type.equals("AUDIO")) {
+
           temp = AUDIO;
-          // System.out.println("Audio");
+
         } else if (type.equals("VISUAL")) {
+
           temp = VISUAL;
-          //  System.out.println("Visual");
 
         } else if (type.equals("AUDIO_MOBILE")) {
 
           temp = AUDIO_MOBILE;
-          //  System.out.println("Audio Mobile");
 
-        } else if (type.equals("Visual Mobile")) {
+        } else if (type.equals("VISUAL_MOBILE")) {
+
           temp = VISUAL_MOBILE;
-          // System.out.println("Visual Mobile");
+
 
         } else {
           System.out.println("null");
-          temp = null;
+
+          temp = NULL;
+
         }
         if (manufacturer.equals("")) {
+
           manufacturer = "ERROR";
+
         }
         if (name.equals("")) {
+
           name = "ERROR";
         }
         int idTemp = Integer.parseInt(id);
+
         Product productFromDB = new Widget(idTemp, name, manufacturer, temp); // Create object
         // save to observable list
+
         productLine.add(productFromDB); //adds info form database to product line
+
         //listView.getItems().add(String.valueOf(productFromDB));//another way to add products
+        // produceline.add(productFromDB);
+
+        // listView.setItems(produceline);
         listView.getItems().add(productFromDB);
 
+        //listView.getItems().add(productFromDB);
+        //listView.getItems().add(produceline.toString());
         int productionNumber = rs.getRow(); // get row id
-        System.out.println(productionNumber);
 
+        System.out.println(productionNumber);
 
       }
       stmt.close();
@@ -291,12 +424,13 @@ public class Controller {
    * @param event1 This method currently * prints to the console
    */
   @FXML
-  void printproduct2(MouseEvent event1) {
+  void printproduct2(MouseEvent event1) throws IOException {
 
     System.out.println("Test for Record Production button"); // test button for Record Production
-    productionLog();
-    initializeProductionRecordDB();
 
+    productionLog();
+
+    initializeProductionRecordDB();
 
   }
 
@@ -307,29 +441,28 @@ public class Controller {
   public void initializeValue() { // adds value 1- 10 to to a combo box
 
     comboBox.setEditable(true);  // creates an editable comboBox
-    // comboBox.getSelectionModel().selectFirst(); // This line prints numbers out 2 times
+    //comboBox.getSelectionModel().selectFirst(); // This line prints numbers out 2 times
 
   }
 
   /**
    * created a new ProductionRecord datatase to store information the the Production record.
    */
-  public void initializeProductionRecordDB() {
-
+  public void initializeProductionRecordDB() throws IOException {
+    Properties prop = new Properties();
+    prop.load(new FileInputStream("res/properties"));
     Date date = new Date();
-    long time = date.getTime();
-    Timestamp ts = new Timestamp(time);
 
-    // String nameText = prodField1.getText();   // Gets information from production field
-    // String manuText = manuField2.getText();   // Gets information from Manufacturer field
-    //  ItemType type = itemType.getValue();      // Gets information from Item Type choice box.
+    long time = date.getTime();
+
+    Timestamp ts = new Timestamp(time);
 
     final String jdbc_driver = "org.h2.Driver";
     final String db_url = "jdbc:h2:./res/ProductDatabase";
 
     //  Database credentials
     final String user = "";
-    final String pass = "";
+    final String pass = prop.getProperty("password");
     Connection conn = null;
     Statement stmt = null;
 
@@ -347,8 +480,18 @@ public class Controller {
       System.out.println("Inserting production records into the table...");
 
       textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
+
       String comboNumber = comboBox
           .getValue();   // this  will allow me to pull the number from the combo box
+
+
+
+      /*if (Objects.equals(comboNumber, p)){
+        comboNumber = "0";
+      }
+      else {
+        return comboNumber;
+      }*/
 
       System.out.println("This is the comboNumber I choose "
           + comboNumber); // this is the test for the combo number
@@ -360,16 +503,14 @@ public class Controller {
           + listItems); // this is the test for the list Items
 
       int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
+
       int id = listItems.getId();
+
       String name = listItems.getName();
+
       String manu = listItems.getManufacturer();
+
       ItemType type = listItems.getType();
-
-      // String tempDate = date.toString();
-
-      //Product productProduced = new Widget(id, name, manu, type);
-      // Product productProduced = new Widget(listView.getTypeSelector(), "Apple", AUDIO);
-      // test constructor used when creating production records from user interface
 
       int itemCount = 0;
       int numCount = 0;
@@ -383,8 +524,11 @@ public class Controller {
         //} // 1st end brace for production run project
         // ProductionRecord pr = new ProductionRecord( 0);
         System.out.println("numProduced is " + numProduced);
+
         System.out.println("num count is " + numCount);
+
         numCount++;
+
         String sql =
             "INSERT INTO PRODUCTIONRECORD"
                 + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED) "
@@ -394,11 +538,13 @@ public class Controller {
         //  text fields and choice box and loads them into the database.
 
         textArea.appendText(
+
             " Prod. Num: " + numCount + " Product ID: " + id + " Serial Num: " + manu
                 .substring(0, 3)
                 + type.code + "0000" + itemCount + " Date: " + ts + "\n");
 
         System.out.println("Inserted production records into the table...");
+
         System.out.println(sql);
 
         stmt.executeUpdate(sql);
@@ -422,14 +568,16 @@ public class Controller {
    * This will be a new method that updates the text area with the production record log. This
    * method reads information from the Production Record database
    */
-  public void productionAreaLog() {
+  public void productionAreaLog() throws IOException {
+    Properties prop = new Properties();
+    prop.load(new FileInputStream("res/properties"));
 
     final String jdbc_driver = "org.h2.Driver";
     final String db_url = "jdbc:h2:./res/ProductDatabase";
 
     //  Database credentials
     final String user = "";
-    final String pass = "";
+    final String pass = prop.getProperty("password");
     Connection conn = null;
     Statement stmt = null;
 
@@ -447,13 +595,19 @@ public class Controller {
       while (rs.next()) {
         // these lines correspond to the database table columns
         String prodId = rs.getString(1);
+
         String prodNum = rs.getString(2);
+
         String serialNum = rs.getString(3);
+
         String prodDate = rs.getString(4);
+
         textArea.appendText(
+
             " Prod. Num: " + prodNum + " Product ID: " + prodId + " Serial Num:" + serialNum
                 + " Date: "
                 + prodDate + "\n");
+
         textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
 
       }
@@ -474,10 +628,14 @@ public class Controller {
    */
   @FXML
 
-  public void initializeDB() {
+  public void initializeDB() throws IOException {
+    Properties prop = new Properties();
+    prop.load(new FileInputStream("res/properties"));
 
     String nameText = prodField1.getText();   // Gets information from production field
+
     String manuText = manuField2.getText();   // Gets information from Manufacturer field
+
     ItemType type = itemType.getValue();      // Gets information from Item Type choice box.
 
     final String jdbc_driver = "org.h2.Driver";
@@ -485,7 +643,7 @@ public class Controller {
 
     //  Database credentials
     final String user = "";
-    final String pass = "";
+    final String pass = prop.getProperty("password");
     Connection conn = null;
     Statement stmt = null;
 
@@ -525,7 +683,8 @@ public class Controller {
   @FXML
   void playMediainfo(MouseEvent event2) {
 
-    System.out.println("Test for Media Production button"); // test button for Record Production
+    System.out.println("Test for Media Production button"); // test button for Media Production
+
     testMultimedia();
 
 
