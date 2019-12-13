@@ -10,7 +10,7 @@ package productionproject;
 
 enum ItemType {  // creates enum item to store type and code information
 
-  AUDIO("AU"), VISUAL("VI"), AUDIO_MOBILE("AM"), VISUAL_MOBILE("VM");
+  AUDIO("AU"), VISUAL("VI"), AUDIO_MOBILE("AM"), VISUAL_MOBILE("VM"), NULL("NL");
 
   public String code;
 
