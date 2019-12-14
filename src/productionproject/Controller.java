@@ -538,7 +538,7 @@ public class Controller {
 
         System.out.println("num count is " + numCount);
 
-        String sql =
+        final String sql =
             "INSERT INTO PRODUCTIONRECORD"
                 + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED) "
                 + " VALUES ( '" + id + "', '" + numCount + "', '" + manu.substring(0, 3)
