@@ -15,7 +15,7 @@ This is a record production project that allows the user to create a product and
 
 ## [](https://github.com/PV-COP/PV-README-TEMPLATE/blob/master/TitleOnlyTemplate.md#diagrams)Diagrams
 
-![Alt TEXT]([https://raw.githubusercontent.com/vladrph/ProductionProject2/master/docs/productionproject/ProductDatabase%20%5B2%5D%20VISUALS.png](https://raw.githubusercontent.com/vladrph/ProductionProject2/master/docs/productionproject/ProductDatabase%20%5B2%5D%20VISUALS.png)
+![Alt TEXT]([https://raw.githubusercontent.com/vladrph/ProductionProject2/master/docs/productionproject/ProductDatabase%20%5B2%5D%20VISUALS.png](https://raw.githubusercontent.com/vladrph/ProductionProject2/master/docs/productionproject/ProductDatabase%20%5B2%5D%20VISUALS.png))
 
 ![Alt Text]()
 ## [](https://github.com/PV-COP/PV-README-TEMPLATE/blob/master/TitleOnlyTemplate.md#getting-started)Getting Started
