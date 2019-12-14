@@ -461,7 +461,7 @@ public class Controller {
   }
 
   /**
-   * created a new ProductionRecord datatase to store information the the Production record.
+   * created a new ProductionRecord Database to store information the the Production record.
    */
   public void initializeProductionRecordDB() throws IOException {
     Properties prop = new Properties();
