@@ -150,6 +150,7 @@ public class Controller {
 
   public void newEmployee() {
 
+    employeeTextArea.setText(""); // clears text field
     employeeTextArea
         .setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
 
