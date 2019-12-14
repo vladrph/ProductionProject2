@@ -218,8 +218,6 @@ public class Controller {
       comboBox.setValue("0");
     }
 
-
-
     System.out.println(
         "This is the comboNumber I choose " + comboNumber); // this is the test for the combo number
 
