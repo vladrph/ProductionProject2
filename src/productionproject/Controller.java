@@ -524,7 +524,7 @@ public class Controller {
       ItemType type = listItems.getType();
 
       int itemCount = 0;
-      int numCount = 0;
+      int numCount = 1;
       for (int productionRunProduct = 0; productionRunProduct < numProduced;
           productionRunProduct++) {
         //ProductionRecord pr = new ProductionRecord(productProduced, itemCount++);
@@ -538,8 +538,6 @@ public class Controller {
 
         System.out.println("num count is " + numCount);
 
-        numCount++;
-
         String sql =
             "INSERT INTO PRODUCTIONRECORD"
                 + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED) "
@@ -547,10 +545,10 @@ public class Controller {
                 + type.code + "0000" + itemCount + "', '" + ts
                 + "' )";  // this sql statement gets information from the
         //  text fields and choice box and loads them into the database.
-
+        numCount++;
         textArea.appendText(
 
-            " Prod. Num: " + id + " Product ID: " + numCount + " Serial Num: " + manu
+            " Prod. Num: " + numCount + " Product ID: " + id + " Serial Num: " + manu
                 .substring(0, 3)
                 + type.code + "0000" + itemCount + " Date: " + ts + "\n");
 
