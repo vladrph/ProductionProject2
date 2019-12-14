@@ -551,7 +551,7 @@ public class Controller {
 
         textArea.appendText(
 
-            " Prod. Num: " + numCount + " Product ID: " + id + " Serial Num: " + manu
+            " Prod. Num: " + id + " Product ID: " + numCount + " Serial Num: " + manu
                 .substring(0, 3)
                 + type.code + "0000" + itemCount + " Date: " + ts + "\n");
 
