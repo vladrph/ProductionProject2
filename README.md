@@ -11,7 +11,8 @@ This is a record production project that allows the user to create a product and
 
 ## [](https://github.com/PV-COP/PV-README-TEMPLATE/blob/master/TitleOnlyTemplate.md#documentation)Documentation
 
-[JavaDoc]([https://vladrph.github.io/ProductionProject2/](https://vladrph.github.io/ProductionProject2/))
+
+[JAVA-DOC](https://vladrph.github.io/ProductionProject2/)
 
 ## [](https://github.com/PV-COP/PV-README-TEMPLATE/blob/master/TitleOnlyTemplate.md#diagrams)Diagrams
 
