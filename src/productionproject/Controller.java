@@ -217,6 +217,8 @@ public class Controller {
       comboBox.setValue("0");
     }
 
+
+
     System.out.println(
         "This is the comboNumber I choose " + comboNumber); // this is the test for the combo number
 
@@ -234,6 +236,10 @@ public class Controller {
     ItemType type = listItems.getType();
 
     int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
+
+    if (numProduced < 0 || numProduced > 10) {
+      numProduced = 0;
+    }
 
     Product productProduced = new Widget(id, name, manu, type);
 
