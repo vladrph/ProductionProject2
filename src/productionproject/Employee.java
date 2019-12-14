@@ -1,9 +1,16 @@
 package productionproject;
 
-
 import java.util.regex.Matcher;
+
 import java.util.regex.Pattern;
 
+/**
+ * This document contains the Employee information for the Production Project 2 GUI project. This
+ * class has th ability to create a user name for the user, validate a password and generate a
+ * custom email address for the user.
+ *
+ * @author Vladimir Petit-Homme
+ */
 public class Employee {
 
   StringBuilder name;
@@ -30,6 +37,12 @@ public class Employee {
 
   }  // end braces for employee constructor
 
+  /**
+   * This method verifies if the user name contains a space. If it does it sets the correct name. If
+   * it does not it returns a default name and email address.
+   *
+   * @return returns the name if it is valid otherwise it returns default values.
+   */
 
   private boolean checkName() {
 
@@ -54,6 +67,9 @@ public class Employee {
 
   }
 
+  /**
+   * This method creates an email address for the user if the user enters a valid name.
+   */
   private void setEmail() {
     int spacePos = name.indexOf(" ");
 
@@ -72,6 +88,9 @@ public class Employee {
 
   }
 
+  /**
+   * This method set a user name for the user if the user enters a valid name.
+   */
   private void setUserName() {
 
     String firstInitial = String.valueOf(name.charAt(0));
@@ -84,6 +103,12 @@ public class Employee {
 
   }
 
+  /**
+   * This method verifies if the password that was entered contains the appropriate parameters.
+   *
+   * @return If the parameters are correct it returns the password otherwise it returns the "pw".
+   *
+   */
   private boolean isValidPassword() {
 
     Pattern p = Pattern.compile("(?=.*?[A-Z])(?=.*?[a-z])(?=.*[!@#$%^&*])");
@@ -96,20 +121,41 @@ public class Employee {
 
     } else {
 
-      password = "pw";
+      password = "wp";
 
       return Boolean.parseBoolean(password);
 
     }
   }
 
+
+  /**
+   * This method reverse the string of a password for the user to protect user information.
+   *
+   * @param id String information of the user password.
+   * @return recursively reverse's the password.
+   */
+  public String reverseString(String id) {
+
+    if (id.length() <= 1) {
+      return id;
+    } else {
+      return reverseString(id.substring(1)) + id.charAt(0);
+    }
+  }
+
+  /**
+   * To string method to generate the Employee Details.
+   *
+   * @return Name, Username, Email and Password.
+   */
   @Override
   public String toString() {
     return "\nEmployee Details"
         + "\nName : " + name
         + "\nUsername : " + userName
         + "\nEmail : " + email
-        + "\nInitial Password : " + password;
+        + "\nInitial Password : " + reverseString(password);
 
   }
 

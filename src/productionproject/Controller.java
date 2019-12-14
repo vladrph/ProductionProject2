@@ -98,9 +98,8 @@ public class Controller {
   private TextArea textArea;
 
   @FXML
-  private
-        ObservableList<Product> produceline = FXCollections
-      .observableArrayList();
+
+  ObservableList<Product> produceline = FXCollections.observableArrayList();
   @FXML
   private //ListView listView;
       ListView<Product> listView = new ListView<>(produceline);
@@ -210,7 +209,7 @@ public class Controller {
     } else if (comboNumber.equals("10")) {
       comboNumber = "10";
     } else {
-      comboNumber = "0";
+      comboBox.setValue("0");
     }
 
     System.out.println(
@@ -349,8 +348,6 @@ public class Controller {
 
         String type = rs.getString(3);
 
-        String id = rs.getString(1);
-
         ItemType temp;
 
         if (type.equals("AUDIO")) {
@@ -385,6 +382,8 @@ public class Controller {
 
           name = "ERROR";
         }
+        String id = rs.getString(1);
+
         int idTemp = Integer.parseInt(id);
 
         Product productFromDB = new Widget(idTemp, name, manufacturer, temp); // Create object
@@ -505,8 +504,6 @@ public class Controller {
       int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
 
       int id = listItems.getId();
-
-      // String name = listItems.getName();
 
       String manu = listItems.getManufacturer();
 

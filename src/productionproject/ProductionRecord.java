@@ -5,7 +5,8 @@ import java.util.Date;
 
 /**
  * This  document has the contains the production record information for the Production Project2 GUI
- * project.
+ * project. This class can generate a TimeStamp, Serial Number and  increment the item count. It also
+ * can pull the productID and generate a Production Number.
  *
  * @author Vladimir Petit-Homme
  */
