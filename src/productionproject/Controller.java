@@ -156,6 +156,10 @@ public class Controller {
     String name = employeeNameField.getText(); // gets the Employee name field information
 
     String passWord = passwordField1.getText(); // gets the Employee Password information
+    if (employeeNameField.getText().equals("") || passwordField1.getText().equals("")) {
+      name = "ERROR";
+      passWord = "ERROR";
+    }
 
     Employee employee = new Employee(name, passWord);
 
@@ -164,6 +168,7 @@ public class Controller {
     employeeNameField.setText("");   // clears text field
 
     passwordField1.setText("");  // clears text field
+
   }
 
   /**
@@ -279,6 +284,8 @@ public class Controller {
 
     comboBox.getItems().add("10");
 
+    comboBox.setValue("5");
+
     itemType.getItems()
         .addAll(AUDIO, ItemType.VISUAL, ItemType.AUDIO_MOBILE, ItemType.VISUAL_MOBILE);
 
@@ -327,7 +334,9 @@ public class Controller {
     Statement stmt = null;
     // Employee employee = new Employee(user, pass);
     try (OutputStream output = new FileOutputStream("res/properties")) {
-
+      prop.setProperty("db_url", "jdbc:h2:./res/ProductDatabase;");
+      prop.setProperty("user", "");
+      prop.setProperty("pass", "dbpw");
       prop.store(output, null);
       System.out.println(prop);
       // STEP 1: Register JDBC driver

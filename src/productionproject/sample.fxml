@@ -59,9 +59,9 @@
                <children>
                   <Label fx:id="label" layoutX="29.0" layoutY="10.0" prefHeight="31.0" prefWidth="177.0" text="         Choose Product" />
                   <ListView fx:id="listView" layoutX="29.0" layoutY="41.0" prefHeight="256.0" prefWidth="592.0" />
-                  <Label layoutX="41.0" layoutY="321.0" prefHeight="27.0" prefWidth="117.0" text="  Choose Quantity" />
+                  <Label layoutX="41.0" layoutY="321.0" prefHeight="27.0" prefWidth="325.0" text="  Choose Quantity - Enter number of items to produce" />
                   <ComboBox fx:id="comboBox" layoutX="41.0" layoutY="348.0" onAction="#initializeValue" onMouseClicked="#initializeValue" prefWidth="150.0" />
-                  <Button fx:id="recordButton" layoutX="407.0" layoutY="348.0" mnemonicParsing="false" onMouseClicked="#printproduct2" prefHeight="25.0" prefWidth="160.0" text="Record Production" />
+                  <Button fx:id="recordButton" layoutX="461.0" layoutY="348.0" mnemonicParsing="false" onMouseClicked="#printproduct2" prefHeight="25.0" prefWidth="160.0" text="Record Production" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -87,7 +87,7 @@
       </Tab>
       <Tab text="Employee">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#getEmployeeinfo" prefHeight="180.0" prefWidth="200.0" styleClass="root" stylesheets="@Background1.css">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root" stylesheets="@Background1.css">
                <children>
                   <GridPane prefHeight="165.0" prefWidth="468.0">
                     <columnConstraints>
