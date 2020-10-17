@@ -41,7 +41,7 @@
                         <Label prefHeight="17.0" prefWidth="303.0" text="         Item Type" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <Button fx:id="productButton" layoutX="476.0" layoutY="166.0" mnemonicParsing="false" onMouseClicked="#addproduct" prefHeight="25.0" prefWidth="131.0" text="Add Product" />
+                  <Button fx:id="productButton" layoutX="476.0" layoutY="166.0" mnemonicParsing="false" onMouseClicked="#addProductButton" prefHeight="25.0" prefWidth="131.0" text="Add Product" />
                   <TableView fx:id="productTableView" layoutY="230.0" prefHeight="257.0" prefWidth="813.0">
 
                       <columns>

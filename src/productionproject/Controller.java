@@ -95,7 +95,7 @@ public class Controller {
   ObservableList<Product> produceline = FXCollections.observableArrayList();
   @FXML
   private
-      ListView<Product> listView = new ListView<>(produceline);
+  ListView<Product> listView = new ListView<>(produceline);
   @FXML
   private TextArea mediaTextArea;
   @FXML
@@ -111,29 +111,45 @@ public class Controller {
    * @param event This method currently prints to the console and establishes a Database
    *              connection.
    */
-  @FXML
-  void addproduct(MouseEvent event) throws SQLException, IOException {
 
-    System.out.println("Test for button for Add Product"); // Text button for print product
+  void retrieveInputDetails() {
+    productInputField.getText();
 
-    //populateList();
+    manufactureInputField.getText();
 
-    String nameText = productInputField.getText();   // Gets information from production field
+    itemType.getValue();
 
-    String manuText = manufactureInputField.getText();   // Gets information from Manufacturer field
+  }
 
-    ItemType type = itemType.getValue();      // Gets a value from the item type field
+  void addToProductLine() {
+    productLine.add(new Widget(productInputField.getText(), manufactureInputField.getText(),
+        itemType.getValue())); // adds to product line
 
-    productLine.add(new Widget(nameText, manuText, type)); // adds to product line
-    produceline.add(new Widget(nameText, manuText, type)); //adds to list view
+  }
 
-    initializeDB();        //establish the database connection
+  void addToListViewProduceLine() {
+    produceline.add(new Widget(productInputField.getText(), manufactureInputField.getText(),
+        itemType.getValue())); //adds to list view
+  }
 
+  void clearInputField() {
     productInputField.setText("");   // clears text field
 
     manufactureInputField.setText("");  // clears text field
 
     itemType.setValue(null); // clears Choice Box field
+  }
+
+  @FXML
+  void addProductButton(MouseEvent event) throws SQLException, IOException {
+
+    System.out.println("Test for button for Add Product"); // Text button for print product
+    retrieveInputDetails();
+    addToProductLine();
+    addToListViewProduceLine();
+    initializeDataBase();
+    clearInputField();
+
 
   }
 
@@ -630,7 +646,7 @@ public class Controller {
    */
   @FXML
 
-  public void initializeDB() throws IOException {
+  public void initializeDataBase() throws IOException {
     Properties prop = new Properties();
     prop.load(new FileInputStream("res/properties"));
 
