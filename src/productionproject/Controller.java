@@ -492,10 +492,10 @@ public class Controller {
 
       System.out.println("Inserting production records into the table...");
 
-      textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
+      textArea.setFont(new Font("Serif", 12)); //sets text area font to Serif and font size to 12
 
       String comboNumber = comboBox
-          .getValue();   // this  will allow me to pull the number from the combo box
+          .getValue();   // this will allow me to pull the number from the combo box
 
 
 
