@@ -7,7 +7,6 @@ import static productionproject.ItemType.VISUAL;
 import static productionproject.ItemType.VISUAL_MOBILE;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -20,10 +19,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import java.util.Date;
-import java.util.Objects;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -73,27 +69,24 @@ public class Controller {
 
   @FXML
   ObservableList<Product> productLine = FXCollections
-      .observableArrayList();  // Creates and observable list called product line
+      .observableArrayList();  // Creates and observable list of type product called product line
   @FXML
-  private TableColumn<?, ?> prodNameCol;
+  private TableColumn<?, ?> productNameCol;
   @FXML
-  private TableColumn<?, ?> manuNameCol;
+  private TableColumn<?, ?> manufactureNameCol;
   @FXML
   private TableColumn<?, ?> typeNameCol;
-  //private TableColumn<Product, ItemType> typeNameCol;
-  @FXML
-  private TextField prodField1; // change name of product field
 
   @FXML
-  private TextField manuField2; // change name of manu field
-  @FXML
-  private TextField employeeNameField; // Field to input Employee name
+  private TextField productInputField;
 
   @FXML
-  private TextField passwordField; // Field to input Password
+  private TextField manufactureInputField;
+  @FXML
+  private TextField employeeNameField;
 
   @FXML
-  private PasswordField passwordField1; // Field to input Password
+  private PasswordField passwordInputField;
   @FXML
   private TextArea textArea;
 
@@ -101,7 +94,7 @@ public class Controller {
 
   ObservableList<Product> produceline = FXCollections.observableArrayList();
   @FXML
-  private //ListView listView;
+  private
       ListView<Product> listView = new ListView<>(produceline);
   @FXML
   private TextArea mediaTextArea;
@@ -125,9 +118,9 @@ public class Controller {
 
     //populateList();
 
-    String nameText = prodField1.getText();   // Gets information from production field
+    String nameText = productInputField.getText();   // Gets information from production field
 
-    String manuText = manuField2.getText();   // Gets information from Manufacturer field
+    String manuText = manufactureInputField.getText();   // Gets information from Manufacturer field
 
     ItemType type = itemType.getValue();      // Gets a value from the item type field
 
@@ -136,9 +129,9 @@ public class Controller {
 
     initializeDB();        //establish the database connection
 
-    prodField1.setText("");   // clears text field
+    productInputField.setText("");   // clears text field
 
-    manuField2.setText("");  // clears text field
+    manufactureInputField.setText("");  // clears text field
 
     itemType.setValue(null); // clears Choice Box field
 
@@ -156,8 +149,8 @@ public class Controller {
 
     String name = employeeNameField.getText(); // gets the Employee name field information
 
-    String passWord = passwordField1.getText(); // gets the Employee Password information
-    if (employeeNameField.getText().equals("") || passwordField1.getText().equals("")) {
+    String passWord = passwordInputField.getText(); // gets the Employee Password information
+    if (employeeNameField.getText().equals("") || passwordInputField.getText().equals("")) {
       name = "ERROR";
       passWord = "ERROR";
     }
@@ -168,7 +161,7 @@ public class Controller {
 
     employeeNameField.setText("");   // clears text field
 
-    passwordField1.setText("");  // clears text field
+    passwordInputField.setText("");  // clears text field
 
   }
 
@@ -299,9 +292,9 @@ public class Controller {
 
     populateList();
 
-    prodNameCol.setCellValueFactory(new PropertyValueFactory("name"));
+    productNameCol.setCellValueFactory(new PropertyValueFactory("name"));
 
-    manuNameCol.setCellValueFactory(new PropertyValueFactory("manufacturer"));
+    manufactureNameCol.setCellValueFactory(new PropertyValueFactory("manufacturer"));
 
     typeNameCol.setCellValueFactory(new PropertyValueFactory("type"));
 
@@ -641,9 +634,9 @@ public class Controller {
     Properties prop = new Properties();
     prop.load(new FileInputStream("res/properties"));
 
-    String nameText = prodField1.getText();   // Gets information from production field
+    String nameText = productInputField.getText();   // Gets information from production field
 
-    String manuText = manuField2.getText();   // Gets information from Manufacturer field
+    String manuText = manufactureInputField.getText();   // Gets information from Manufacturer field
 
     ItemType type = itemType.getValue();      // Gets information from Item Type choice box.
 

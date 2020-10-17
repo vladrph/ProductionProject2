@@ -1,4 +1,4 @@
-#Sat Dec 14 18:43:13 EST 2019
+#Fri Oct 16 22:35:20 EDT 2020
 user=
 pass=dbpw
 db_url=jdbc\:h2\:./res/ProductDatabase;
