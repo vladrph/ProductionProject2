@@ -127,11 +127,11 @@ public class Controller {
   }
 
   void clearInputField() {
-    productInputField.setText("");   // clears text field
+    productInputField.clear();
 
-    manufactureInputField.setText("");  // clears text field
+    manufactureInputField.clear();
 
-    itemType.setValue(null); // clears Choice Box field
+    itemType.setValue(null);
   }
 
   /**
@@ -367,7 +367,7 @@ public class Controller {
   @FXML
   public void initializeValue() {
 
-    comboBox.setEditable(true);  // creates an editable comboBox
+    comboBox.setEditable(true);
   }
   /**
    * created a new ProductionRecord Database to store information the the Production record.
