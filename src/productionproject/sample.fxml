@@ -61,7 +61,7 @@
                   <ListView fx:id="listView" layoutX="29.0" layoutY="41.0" prefHeight="256.0" prefWidth="592.0" />
                   <Label layoutX="41.0" layoutY="321.0" prefHeight="27.0" prefWidth="325.0" text="  Choose Quantity - Enter number of items to produce" />
                   <ComboBox fx:id="comboBox" layoutX="41.0" layoutY="348.0" onAction="#initializeValue" onMouseClicked="#initializeValue" prefWidth="150.0" />
-                  <Button fx:id="recordButton" layoutX="461.0" layoutY="348.0" mnemonicParsing="false" onMouseClicked="#printproduct2" prefHeight="25.0" prefWidth="160.0" text="Record Production" />
+                  <Button fx:id="recordButton" layoutX="461.0" layoutY="348.0" mnemonicParsing="false" onMouseClicked="#recordProductionButton" prefHeight="25.0" prefWidth="160.0" text="Record Production" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -107,7 +107,7 @@
                   </GridPane>
                   <TextArea fx:id="employeeTextArea" layoutX="14.0" layoutY="244.0" prefHeight="200.0" prefWidth="490.0" />
                   <Label layoutX="17.0" layoutY="209.0" prefHeight="35.0" prefWidth="236.0" text="New Employee Details " />
-                  <Button layoutX="355.0" layoutY="176.0" mnemonicParsing="false" onMouseClicked="#getEmployeeinfo" prefHeight="23.0" prefWidth="109.0" text="Submit" />
+                  <Button layoutX="355.0" layoutY="176.0" mnemonicParsing="false" onMouseClicked="#getEmployeeInfo" prefHeight="23.0" prefWidth="109.0" text="Submit" />
                </children>
             </AnchorPane>
         </content>

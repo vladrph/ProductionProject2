@@ -10,16 +10,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import java.util.Date;
-import java.util.Properties;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -54,7 +48,7 @@ public class Controller {
 
 
   @FXML
-  private ComboBox<String> comboBox = new ComboBox<>();
+  private ComboBox<Integer> comboBox = new ComboBox<>();
 
 
   @FXML
@@ -69,7 +63,7 @@ public class Controller {
 
   @FXML
   ObservableList<Product> productLine = FXCollections
-      .observableArrayList();  // Creates and observable list of type product called product line
+      .observableArrayList();
   @FXML
   private TableColumn<?, ?> productNameCol;
   @FXML
@@ -103,33 +97,33 @@ public class Controller {
 
   @FXML
   private Button mediaButton;
+  private MouseEvent event;
 
-
-  /**
-   * This method prints " Test for button" for the print product button.
-   *
-   * @param event This method currently prints to the console and establishes a Database
-   *              connection.
-   */
+  Database database = new Database();
 
   void retrieveInputDetails() {
     productInputField.getText();
-
     manufactureInputField.getText();
-
     itemType.getValue();
-
   }
 
   void addToProductLine() {
     productLine.add(new Widget(productInputField.getText(), manufactureInputField.getText(),
-        itemType.getValue())); // adds to product line
+        itemType.getValue()));
+  }
 
+  void addToProductDB() throws IOException, SQLException {
+    database.openDatabase();
+    database.stmt.executeUpdate(
+        "INSERT INTO PRODUCT" + "(NAME, TYPE, MANUFACTURER)" + "VALUES ('" + productInputField
+            .getText() + "', '" + itemType.getValue() + "','" + manufactureInputField.getText()
+            + "', ) ");
+    database.closeDatabase();
   }
 
   void addToListViewProduceLine() {
     produceline.add(new Widget(productInputField.getText(), manufactureInputField.getText(),
-        itemType.getValue())); //adds to list view
+        itemType.getValue()));
   }
 
   void clearInputField() {
@@ -140,32 +134,41 @@ public class Controller {
     itemType.setValue(null); // clears Choice Box field
   }
 
+  /**
+   * This method prints " Test for button" for the print product button.
+   *
+   * @param event This method currently prints to the console and establishes a Database
+   *              connection.
+   */
   @FXML
-  void addProductButton(MouseEvent event) throws SQLException, IOException {
-
-    System.out.println("Test for button for Add Product"); // Text button for print product
+  void addProductButton(MouseEvent event) throws IOException, SQLException {
+    this.event = event;
+    addToProductDB();
     retrieveInputDetails();
     addToProductLine();
     addToListViewProduceLine();
-    initializeDataBase();
     clearInputField();
-
-
   }
-
   /**
    * This will be a new method to receive the Employee details.
    */
+  void formatEmpTextArea() {
 
-  public void newEmployee() {
+    employeeTextArea.clear();
 
-    employeeTextArea.setText(""); // clears text field
     employeeTextArea
-        .setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
+        .setFont(new Font("Serif", 12));
+  }
+  void cleanUpInputField() {
+    passwordInputField.clear();
+    employeeNameField.clear();
+  }
 
-    String name = employeeNameField.getText(); // gets the Employee name field information
+  void createEmployee() {
+    String name = employeeNameField.getText();
 
-    String passWord = passwordInputField.getText(); // gets the Employee Password information
+    String passWord = passwordInputField.getText();
+
     if (employeeNameField.getText().equals("") || passwordInputField.getText().equals("")) {
       name = "ERROR";
       passWord = "ERROR";
@@ -174,196 +177,121 @@ public class Controller {
     Employee employee = new Employee(name, passWord);
 
     employeeTextArea.appendText(employee.toString());
-
-    employeeNameField.setText("");   // clears text field
-
-    passwordInputField.setText("");  // clears text field
-
   }
-
   /**
    * New Employee method that print out the employee information.
    */
   @FXML
-  void getEmployeeinfo(MouseEvent event3) {
-
-    System.out.println("Test for Employee button"); // test button for Employee Production
-
-    newEmployee();
-
+  void getEmployeeInfo(MouseEvent event3) {
+    this.event = event3;
+    formatEmpTextArea();
+    createEmployee();
+    cleanUpInputField();
   }
-
   /**
    * This method prints the Production log info to the console.
    */
-  public void productionLog() {
 
-    textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
+  void formatTextArea() {
+    textArea.setFont(new Font("Serif", 12));
+  }
 
-    String comboNumber = comboBox
-        .getValue();   // this  will allow me to pull the number from the combo box
-
-    if (comboNumber.equals("1")) {
-      comboNumber = "1";
-    } else if (comboNumber.equals("2")) {
-      comboNumber = "2";
-    } else if (comboNumber.equals("3")) {
-      comboNumber = "3";
-    } else if (comboNumber.equals("4")) {
-      comboNumber = "4";
-    } else if (comboNumber.equals("5")) {
-      comboNumber = "5";
-    } else if (comboNumber.equals("6")) {
-      comboNumber = "6";
-    } else if (comboNumber.equals("7")) {
-      comboNumber = "7";
-    } else if (comboNumber.equals("8")) {
-      comboNumber = "8";
-    } else if (comboNumber.equals("9")) {
-      comboNumber = "9";
-    } else if (comboNumber.equals("10")) {
-      comboNumber = "10";
-    } else {
-      comboBox.setValue("0");
-    }
-
-    System.out.println(
-        "This is the comboNumber I choose " + comboNumber); // this is the test for the combo number
+  void productionTest() {
+    int comboNumber = Integer.parseInt(String
+        .valueOf(comboBox.getValue()));
 
     Product listItems = listView.getSelectionModel()
-        .getSelectedItem(); // this line will allow me to choose items from the list view
+        .getSelectedItem();
 
-    System.out.println("This is the item on the list that I choose" + "\n"
-        + listItems); // this is the test for the list Items
-    int id = listItems.getId();
-
-    String name = listItems.getName();
-
-    String manu = listItems.getManufacturer();
-
-    ItemType type = listItems.getType();
-
-    int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
-
-    if (numProduced < 0 || numProduced > 10) {
-      numProduced = 0;
-    }
-
-    Product productProduced = new Widget(id, name, manu, type);
-
-    // test constructor used when creating production records from user interface
+    Product productProduced = new Widget(listItems.getId(), listItems.getName(),
+        listItems.getManufacturer(), listItems.getType());
 
     int itemCount = 0;
 
-    for (int productionRunProduct = 0; productionRunProduct < numProduced; productionRunProduct++) {
+    for (int productionRunProduct = 0; productionRunProduct < comboNumber; productionRunProduct++) {
 
-      ProductionRecord pr = new ProductionRecord(id, productProduced, itemCount++);
+      ProductionRecord productLog = new ProductionRecord(listItems.getId(), productProduced,
+          itemCount++);
 
-      // using the iterator as the product id for testing
-      System.out.println(pr.toString());
-      // textArea.appendText(pr.toString() + "\n");
+      System.out.println(productLog.toString());
+
     }
-
-    System.out.println("numProduced is " + numProduced);
-
-
   }
 
+  public ComboBox<Integer> getComboBox() {
+    return comboBox;
+  }
+
+  public void setComboBox(ComboBox<Integer> comboBox) {
+    this.comboBox = comboBox;
+  }
+
+  void retrieveComboBoxDetails() {
+    int comboNumber = Integer.parseInt(String
+        .valueOf(comboBox.getValue()));
+
+    if (comboNumber < 0 || comboNumber > 10) {
+      comboBox.setValue(0);
+    }
+  }
+
+  public void productionLog() {
+    formatTextArea();
+    retrieveComboBoxDetails();
+    productionTest();
+  }
 
   /**
    * This method initialize runs automatically as the program is started. This method populates
    * numbers to the comboBox This method populates enum values into the combo box.
    */
 
-
-  public void initialize() throws SQLException, IOException {
-
-    comboBox.getItems().add("1");
-
-    comboBox.getItems().add("2");
-
-    comboBox.getItems().add("3");
-
-    comboBox.getItems().add("4");
-
-    comboBox.getItems().add("5");
-
-    comboBox.getItems().add("6");
-
-    comboBox.getItems().add("7");
-
-    comboBox.getItems().add("8");
-
-    comboBox.getItems().add("9");
-
-    comboBox.getItems().add("10");
-
-    comboBox.setValue("5");
-
-    itemType.getItems()
-        .addAll(AUDIO, ItemType.VISUAL, ItemType.AUDIO_MOBILE, ItemType.VISUAL_MOBILE);
-
-    productTableView.setItems(productLine);
-    listView.setItems(produceline);
-
-    populateList();
-
+  void setCellFactory() {
     productNameCol.setCellValueFactory(new PropertyValueFactory("name"));
 
     manufactureNameCol.setCellValueFactory(new PropertyValueFactory("manufacturer"));
 
     typeNameCol.setCellValueFactory(new PropertyValueFactory("type"));
+  }
 
+  void comboBoxValues() {
+    for (int i = 0; i <= 10; i++) {
+      comboBox.getItems().add(i);
+    }
+    comboBox.setValue(5);
+  }
+
+  void setItemValues() {
+    itemType.getItems()
+        .addAll(AUDIO, ItemType.VISUAL, ItemType.AUDIO_MOBILE, ItemType.VISUAL_MOBILE);
+
+    productTableView.setItems(productLine);
+    listView.setItems(produceline);
+  }
+
+  public void initialize() throws IOException {
+    comboBoxValues();
+    setItemValues();
+    populateList();
+    setCellFactory();
     productionAreaLog();
-
   }
-
-
-  public ChoiceBox<ItemType> getItemType() {
-    return itemType;
-  }
-
-  public void setItemType(ChoiceBox<ItemType> itemType) {
-    this.itemType = itemType;
-  }
-
-
   /**
    * This method populate list is currently an empty method that will be used populate information
    * from the database.
    */
 
+  public void populateList() throws IOException {
 
-  public void populateList() throws SQLException, IOException {
+    database.getProp().load(new FileInputStream("res/properties"));
 
-    Properties prop = new Properties();
-    prop.load(new FileInputStream("res/properties"));
-    final String jdbc_driver = "org.h2.Driver";
-    final String db_url = "jdbc:h2:./res/ProductDatabase";
-
-    //  Database credentials
-    final String user = "";
-    final String pass = prop.getProperty("password");
-    Connection conn = null;
-    Statement stmt = null;
-    // Employee employee = new Employee(user, pass);
     try (OutputStream output = new FileOutputStream("res/properties")) {
-      prop.setProperty("db_url", "jdbc:h2:./res/ProductDatabase;");
-      prop.setProperty("user", "");
-      prop.setProperty("pass", "dbpw");
-      prop.store(output, null);
-      System.out.println(prop);
-      // STEP 1: Register JDBC driver
-      Class.forName(jdbc_driver);
-      //STEP 2: Open a connection
-      conn = DriverManager.getConnection(db_url, user, pass);
-      stmt = conn.createStatement();
-      String sql = "SELECT * FROM Product";
-
-      ResultSet rs = stmt.executeQuery(sql);
+      database.getProp().store(output, null);
+      database.openDatabase();
+      database.stmt.executeQuery("SELECT * FROM PRODUCT");
+      ResultSet rs = database.getStmt().executeQuery("SELECT * FROM PRODUCT");
 
       while (rs.next()) {
-        // these lines correspond to the database table columns
 
         String name = rs.getString(2);
 
@@ -373,72 +301,55 @@ public class Controller {
 
         ItemType temp;
 
-        if (type.equals("AUDIO")) {
+        switch (type) {
+          case "AUDIO":
 
-          temp = AUDIO;
+            temp = AUDIO;
 
-        } else if (type.equals("VISUAL")) {
+            break;
+          case "VISUAL":
 
-          temp = VISUAL;
+            temp = VISUAL;
 
-        } else if (type.equals("AUDIO_MOBILE")) {
+            break;
+          case "AUDIO_MOBILE":
 
-          temp = AUDIO_MOBILE;
+            temp = AUDIO_MOBILE;
 
-        } else if (type.equals("VISUAL_MOBILE")) {
+            break;
+          case "VISUAL_MOBILE":
 
-          temp = VISUAL_MOBILE;
+            temp = VISUAL_MOBILE;
 
+            break;
+          default:
+            temp = NULL;
 
-        } else {
-          System.out.println("null");
-
-          temp = NULL;
-
+            break;
         }
         if (manufacturer.equals("")) {
 
           manufacturer = "ERROR";
 
         }
-        if (name.equals("")) {
+        if (rs.getString(2).equals("")) {
 
           name = "ERROR";
         }
         String id = rs.getString(1);
 
-        int idTemp = Integer.parseInt(id);
+        Product productFromDB = new Widget(Integer.parseInt(id), name, manufacturer,
+            temp);
 
-        Product productFromDB = new Widget(idTemp, name, manufacturer, temp); // Create object
-        // save to observable list
+        productLine.add(productFromDB);
 
-        productLine.add(productFromDB); //adds info form database to product line
-
-        //listView.getItems().add(String.valueOf(productFromDB));//another way to add products
-        // produceline.add(productFromDB);
-
-        // listView.setItems(produceline);
         listView.getItems().add(productFromDB);
-
-        //listView.getItems().add(productFromDB);
-        //listView.getItems().add(produceline.toString());
-        int productionNumber = rs.getRow(); // get row id
-
-        System.out.println(productionNumber);
-
       }
-      stmt.close();
-      conn.close();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-
+      database.closeDatabase();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
   }
-
-
   /**
    * This method prints " Test for Record Production button" This methods prints to the console to
    * ensure that the method and button is working properly.
@@ -446,172 +357,82 @@ public class Controller {
    * @param event1 This method currently * prints to the console
    */
   @FXML
-  void printproduct2(MouseEvent event1) throws IOException {
-
-    System.out.println("Test for Record Production button"); // test button for Record Production
-
+  void recordProductionButton(MouseEvent event1) throws IOException {
     productionLog();
-
     initializeProductionRecordDB();
-
   }
-
   /**
-   * This method initializes a value of 1-10 to the combo box.
+   * This method initializes the combo box.
    */
   @FXML
-  public void initializeValue() { // adds value 1- 10 to to a combo box
+  public void initializeValue() {
 
     comboBox.setEditable(true);  // creates an editable comboBox
-    //comboBox.getSelectionModel().selectFirst(); // This line prints numbers out 2 times
-
   }
-
   /**
    * created a new ProductionRecord Database to store information the the Production record.
    */
+
   public void initializeProductionRecordDB() throws IOException {
-    Properties prop = new Properties();
-    prop.load(new FileInputStream("res/properties"));
-    Date date = new Date();
 
-    long time = date.getTime();
-
-    Timestamp ts = new Timestamp(time);
-
-    final String jdbc_driver = "org.h2.Driver";
-    final String db_url = "jdbc:h2:./res/ProductDatabase";
-
-    //  Database credentials
-    final String user = "";
-    final String pass = prop.getProperty("password");
-    Connection conn = null;
-    Statement stmt = null;
+    database.openDatabase();
+    database.getProp().load(new FileInputStream("res/properties"));
 
     try {
 
-      // STEP 1: Register JDBC driver
-      Class.forName(jdbc_driver);
+      formatTextArea();
 
-      //STEP 2: Open a connection
-      conn = DriverManager.getConnection(db_url, user, pass);
-
-      //STEP 3: Execute a query
-      stmt = conn.createStatement();
-
-      System.out.println("Inserting production records into the table...");
-
-      textArea.setFont(new Font("Serif", 12)); //sets text area font to Serif and font size to 12
-
-      String comboNumber = comboBox
-          .getValue();   // this will allow me to pull the number from the combo box
-
-
-
-      /*if (Objects.equals(comboNumber, p)){
-        comboNumber = "0";
-      }
-      else {
-        return comboNumber;
-      }*/
-
-      System.out.println("This is the comboNumber I choose "
-          + comboNumber); // this is the test for the combo number
+      retrieveComboBoxDetails();
 
       Product listItems = listView.getSelectionModel()
-          .getSelectedItem(); // this line will allow me to choose items from the list view
 
-      System.out.println("This is the item on the list that I choose" + "\n"
-          + listItems); // this is the test for the list Items
+          .getSelectedItem();
 
-      int numProduced = Integer.parseInt(comboNumber); //this will come from the combobox in the UI
+      ProductionRecord product = new ProductionRecord(listItems.getId());
 
-      int id = listItems.getId();
-
-      String manu = listItems.getManufacturer();
-
-      ItemType type = listItems.getType();
-
-      int itemCount = 0;
-      int numCount = 1;
-      for (int productionRunProduct = 0; productionRunProduct < numProduced;
+      int numCount = 0;
+      for (int productionRunProduct = 0; productionRunProduct < Integer.parseInt(String
+          .valueOf(comboBox.getValue()));
           productionRunProduct++) {
-        //ProductionRecord pr = new ProductionRecord(productProduced, itemCount++);
 
-        // using the iterator as the product id for testing
-
-        //textArea.appendText(pr.toString() + "\n");
-        //} // 1st end brace for production run project
-        // ProductionRecord pr = new ProductionRecord( 0);
-        System.out.println("numProduced is " + numProduced);
-
-        System.out.println("num count is " + numCount);
-
-        String sql =
+        database.stmt.executeUpdate(
             "INSERT INTO PRODUCTIONRECORD"
-                + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED) "
-                + " VALUES ( '" + id + "', '" + numCount + "', '" + manu.substring(0, 3)
-                + type.code + "0000" + itemCount + "', '" + ts
-                + "' )";  // this sql statement gets information from the
-        //  text fields and choice box and loads them into the database.
+                + "(PRODUCT_ID, PRODUCTION_NUM, SERIAL_NUM,DATE_PRODUCED)" + "VALUES ( '"
+                + listItems.getId() + "', '" + numCount + "', '" + listItems.getManufacturer()
+                .substring(0, 3)
+                + listItems.getType().code + "0000" + product.itemCount + "', '" + product.ts
+                + "' )");
+
         numCount++;
         textArea.appendText(
 
-            " Prod. Num: " + numCount + " Product ID: " + id + " Serial Num: " + manu
+            " Prod. Num: " + numCount + " Product ID: " + listItems.getId() + " Serial Num: "
+                + listItems.getManufacturer()
                 .substring(0, 3)
-                + type.code + "0000" + itemCount + " Date: " + ts + "\n");
-
-        System.out.println("Inserted production records into the table...");
-
-        System.out.println(sql);
-
-        stmt.executeUpdate(sql);
-
-
+                + listItems.getType().code + "0000" + product.itemCount + " Date: " + product.ts
+                + "\n");
       }
-      // STEP 4: Clean-up environment
-      stmt.close();
-      conn.close();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
   }
-
-
   /**
    * This will be a new method that updates the text area with the production record log. This
    * method reads information from the Production Record database
    */
+
   public void productionAreaLog() throws IOException {
-    Properties prop = new Properties();
-    prop.load(new FileInputStream("res/properties"));
-
-    final String jdbc_driver = "org.h2.Driver";
-    final String db_url = "jdbc:h2:./res/ProductDatabase";
-
-    //  Database credentials
-    final String user = "";
-    final String pass = prop.getProperty("password");
-    Connection conn = null;
-    Statement stmt = null;
 
     try {
 
-      // STEP 1: Register JDBC driver
-      Class.forName(jdbc_driver);
-      //STEP 2: Open a connection
-      conn = DriverManager.getConnection(db_url, user, pass);
-      stmt = conn.createStatement();
+      database.openDatabase();
+
       String sql = "SELECT * FROM PRODUCTIONRECORD";
 
-      ResultSet rs = stmt.executeQuery(sql);
+      ResultSet rs = database.getStmt().executeQuery(sql);
 
       while (rs.next()) {
-        // these lines correspond to the database table columns
+
         String prodId = rs.getString(1);
 
         String prodNum = rs.getString(2);
@@ -627,72 +448,8 @@ public class Controller {
                 + prodDate + "\n");
 
         textArea.setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
-
       }
-      stmt.close();
-      conn.close();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-
-  }
-
-
-  /**
-   * This method initializes the database and connects the h2 driver.
-   */
-  @FXML
-
-  public void initializeDataBase() throws IOException {
-    Properties prop = new Properties();
-    prop.load(new FileInputStream("res/properties"));
-
-    String nameText = productInputField.getText();   // Gets information from production field
-
-    String manuText = manufactureInputField.getText();   // Gets information from Manufacturer field
-
-    ItemType type = itemType.getValue();      // Gets information from Item Type choice box.
-
-    final String jdbc_driver = "org.h2.Driver";
-    final String db_url = "jdbc:h2:./res/ProductDatabase";
-
-    //  Database credentials
-    final String user = "";
-    final String pass = prop.getProperty("password");
-    Connection conn = null;
-    Statement stmt = null;
-
-    try {
-
-      // STEP 1: Register JDBC driver
-      Class.forName(jdbc_driver);
-
-      //STEP 2: Open a connection
-      conn = DriverManager.getConnection(db_url, user, pass);
-
-      //STEP 3: Execute a query
-      stmt = conn.createStatement();
-
-      System.out.println("Inserting records into the table...");
-
-      String sql = "INSERT INTO Product" + "(type, manufacturer, name) "
-          + " VALUES ( '" + type + "', '" + manuText + "', '" + nameText
-          + "' )";  // this sql statement gets information from the
-      // text fields and choice box and loads them into the database.
-
-      stmt.executeUpdate(sql);
-
-      System.out.println("Inserted records into the table...");
-
-      // STEP 4: Clean-up environment
-      stmt.close();
-      conn.close();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-
+      database.closeDatabase();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -700,14 +457,8 @@ public class Controller {
 
   @FXML
   void playMediainfo(MouseEvent event2) {
-
-    System.out.println("Test for Media Production button"); // test button for Media Production
-
     testMultimedia();
-
-
   }
-
 
   /**
    * This is a method called test multimedia to demonstrate functionality in the code.
@@ -728,12 +479,8 @@ public class Controller {
       p.next();
       p.previous();
       mediaTextArea
-          .setFont(new Font("Serif", 12)); // sets text area font to Serif and font size to 12
+          .setFont(new Font("Serif", 12));
       mediaTextArea.appendText(String.valueOf(p));
-
     }
-
   }
-
-
 }
